@@ -3,18 +3,24 @@ Template used for coding project can be found: https://github.com/electron/elect
 
 ## Project Setup
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
-
 ```bash
 # Clone this repository
-git clone https://github.com/electron/electron-quick-start-typescript
+git clone https://github.com/Letaguator/RetroScreens
 # Go into the repository
-cd electron-quick-start-typescript
+cd RetroScreens
 # Install dependencies
 npm install
 # Run the app
 npm start
 ```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Re-compile automatically
 To recompile automatically and to allow using [electron-reload](https://github.com/yan-foto/electron-reload), run this in a separate terminal:

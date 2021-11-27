@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "strictNullChecks": false, //added
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -10,6 +11,8 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "allowJs": true, //added
+    "noImplicitAny":false, //added
     "sourceMap": true,
     "baseUrl": ".",
     "types": [

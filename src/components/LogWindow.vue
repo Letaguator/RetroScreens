@@ -1,17 +1,13 @@
 <template>
-    <p>LogWindow</p>
+  <p>LogWindow</p>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-        
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

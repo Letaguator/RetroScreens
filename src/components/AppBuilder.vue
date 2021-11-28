@@ -1,17 +1,13 @@
 <template>
-    <p>App Builder</p>
+  <p>App Builder</p>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-        
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

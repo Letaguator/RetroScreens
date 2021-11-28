@@ -1,17 +1,13 @@
 <template>
-    <p>Relationships Buidler</p>
+  <p>Relationships Buidler</p>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-        
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

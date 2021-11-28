@@ -1,17 +1,13 @@
 <template>
-    <p>Things</p>
+  <p>Things</p>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-        
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

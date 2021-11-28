@@ -1,38 +1,54 @@
 <template>
   <div>
     <div class="tab">
-    <button class="tablinks" v-on:click="reveal(event, 'Things')" id="defaultOpen">Things</button>
-    <button class="tablinks" v-on:click="reveal(event, 'Services')">Services</button>
-    <button class="tablinks" v-on:click="reveal(event, 'Relationships')">Relationships</button>
-    <button class="tablinks" v-on:click="reveal(event, 'Applications')" id="defaultOpen">Applications</button>
-    <button class="tablinks" v-on:click="reveal(event, 'Console')">Console</button>
-  </div>
+      <button
+        class="tablinks"
+        v-on:click="reveal(event, 'Things')"
+        id="defaultOpen"
+      >
+        Things
+      </button>
+      <button class="tablinks" v-on:click="reveal(event, 'Services')">
+        Services
+      </button>
+      <button class="tablinks" v-on:click="reveal(event, 'Relationships')">
+        Relationships
+      </button>
+      <button
+        class="tablinks"
+        v-on:click="reveal(event, 'Applications')"
+        id="defaultOpen"
+      >
+        Applications
+      </button>
+      <button class="tablinks" v-on:click="reveal(event, 'Console')">
+        Console
+      </button>
+    </div>
 
     <div id="Things" class="tabcontent">
-      <Things/>
+      <Things />
     </div>
 
     <div id="Services" class="tabcontent">
-      <Services/>
+      <Services />
     </div>
 
     <div id="Relationships" class="tabcontent">
-      <Relationships/>
-    </div> 
-
-    <div id="Applications" class="tabcontent">
-      <Applications/>
-    </div>   
-
-    <div id="Console" class="tabcontent">
-      <Console/>
+      <Relationships />
     </div>
 
+    <div id="Applications" class="tabcontent">
+      <Applications />
+    </div>
+
+    <div id="Console" class="tabcontent">
+      <Console />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-
 import { Options, Vue } from "vue-class-component";
 import Things from "./components/Things.vue";
 import Services from "./components/Services.vue";
@@ -42,31 +58,33 @@ import LogWindow from "./components/LogWindow.vue";
 
 @Options({
   components: {
-    Things,Services,Relationships,Applications,LogWindow,
+    Things,
+    Services,
+    Relationships,
+    Applications,
+    LogWindow,
   },
   methods: {
     reveal: function (evt, tabName) {
       var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(tabName).style.display = "block";
-  //evt.currentTarget.className += " active";
-    }
-  }
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      //evt.currentTarget.className += " active";
+    },
+  },
 })
-
 export default class App extends Vue {}
 
-document.addEventListener('DOMContentLoaded', function (){
+document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("defaultOpen").click();
 });
-
 </script>
 
 <style>
@@ -78,7 +96,9 @@ document.addEventListener('DOMContentLoaded', function (){
   color: #2c3e50;
 }
 
-* {box-sizing: border-box}
+* {
+  box-sizing: border-box;
+}
 
 /* Style the tab */
 .tab {

@@ -34,6 +34,15 @@ export const appStore = new Vuex.Store({
     getServices: (state) => {
       return state.services;
     },
+    getServicebyThing: (state) => (thingName) =>{
+      let result = [] as Array<Service>;
+      for(let entry of state.services){
+        if (entry.thingID === thingName){
+          result.push(entry)
+        }
+      }
+      return result;
+    },
     getRelationships: (state) => {
       return state.relationships;
     },

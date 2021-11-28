@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {Thing} from "./classes/thing.ts"
+import {Thing} from "../classes/thing.ts"
 
 export default {
   data() {

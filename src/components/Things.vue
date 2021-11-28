@@ -7,7 +7,7 @@
       <!-- <img src="" alt=""> -->
       <div class="container">
       <h4>{{item.name}}</h4>
-      <h4>{{item.ipaddress}}</h4> 
+      <h4>{{item.ipAddress}}</h4> 
       <div class="content">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
       </div>
@@ -19,14 +19,14 @@
 </template>
 
 <script>
+import {Thing} from "./classes/thing.ts"
+
 export default {
   data() {
     return {
         items: [
-      {name: "RaspberryPi", ipaddress: "172.168.0.1", socket: "dcnskdv", picture: "./././"},
-      {name: "RaspberryPi", ipaddress: "172.168.0.1", socket: "dcnskdv", picture: "./././"},
-      {name: "RaspberryPi", ipaddress: "172.168.0.1", socket: "dcnskdv", picture: "./././"},
-      {name: "RaspberryPi", ipaddress: "172.168.0.1", socket: "dcnskdv", picture: "./././"}
+      new Thing("Raspberry Pi","172.168.0.1","exampleSocket"),
+      new Thing("Raspberry Pi","172.168.0.1","exampleSocket")
     ]
     }
   },

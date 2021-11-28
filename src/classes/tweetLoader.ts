@@ -1,14 +1,13 @@
 import {Thing} from "./thing"
 import { Service } from "./service";
 import { Relationship } from "./relationship";
-import { appStore } from ".";
+import { appStore } from "../store/store";
 
 const {networkInterfaces} = require('os');
 const nets = networkInterfaces();
 var HOST = networkInterfaces['etho0'][0]['address'];
 var MCAST = "232.1.1.1"
 var PORT = 8088;
-
 
 var dgram = require('dgram');
 
@@ -51,6 +50,5 @@ receive.on('message', function (message, remote){
     else if(obj["Tweet Type"] == "Relationship"){
         let nRelationship = new Relationship(obj["Name"],obj["Type"],obj["FS Name"],obj["SS Name"]);
         appStore.commit('addRelationship', nRelationship);
-    } 
-    
+    }
 });

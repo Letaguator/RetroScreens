@@ -1,4 +1,4 @@
-export class Service{
+export default class Service {
     name:string;
     thingID:string;
     output:boolean;

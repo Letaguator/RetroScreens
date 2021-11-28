@@ -1,5 +1,4 @@
-
-export class App{
+export default class App{
     name:string;
     flow:string[];
     picture:string;

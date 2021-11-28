@@ -1,4 +1,4 @@
-export class Relationship{
+export default class Relationship {
     name:string;
     type:string;
     serv1:string;

@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import Vue, { PropType , defineComponent} from "vue";
-import Service from "./Service";
+import Service from "../classes/service";
 
 export default defineComponent({
   props: {

@@ -1,4 +1,4 @@
-function  service(serviceName:string, input:string = ""){
+function service(serviceName:string, input:string = ""){
     var value:string = "";
     ///build json service request and send to pi
     ///process result

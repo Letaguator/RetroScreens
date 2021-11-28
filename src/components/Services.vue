@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import Service from "./Service";
+import Service from "../classes/service";
 import ServiceDisplayer from "./ServiceDisplayer.vue";
 export default {
   components: {ServiceDisplayer: ServiceDisplayer},

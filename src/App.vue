@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
   border: 1px solid #ccc;
   background-color: #f1f1f1;
   width: 20%;
-  height: 1000px;
+  height: auto;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -155,6 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
   border: 1px solid #ccc;
   width: 80%;
   border-left: none;
-  height: 1000px;
+  height: auto;
 }
 </style>

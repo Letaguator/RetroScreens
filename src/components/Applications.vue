@@ -1,28 +1,20 @@
 <template>
 <div>
-  <ul id="listOfThings">
-  <li v-for="item in items" :key="item.name">
-    {{ item.message }}
-    <div class="card" v-on:click="expand($event)">
-      <!-- <img src="" alt=""> -->
-      <div class="container">
-      <h4>{{item.name}}</h4>
-      <div class="content">
-        <button type="button">Play/Pause</button>
-        <button type="button">Stop</button>
-        <button type="button">Edit</button>
-        <button type="button">Delete</button>
-      </div>
-    </div>
-    </div>
-  </li>
-  </ul>
+  <div class="subtab">
+    <button class="subtablinks" v-for="item in items" :key="item.name" v-on:click="reveal(event,item.name)" >
+        {{item.name}}
+    </button>
+    <button class="open-button" id="createApp" v-on:click="openForm()">Add New</button>
+  </div>
 </div>
 
-<button class="open-button" v-on:click="openForm()">Add New</button>
+<div class="subtabcontent" v-for="item in items" :key="item.name" v-bind:id="item.name">
+  <p> {{item.name}} </p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
 
-<div class="form-popup" id="appForm">
-  <form action="/action_page.php" class="form-container">
+<div class="subtabcontent" id="appForm">
+  <form action="" class="form-container">
     <h4>Create a Relationship</h4>
 
     <label for="ServiceName">Application Name</label>
@@ -39,7 +31,6 @@
   </form>
 </div>
 
-
 </template>
 
 <script>
@@ -49,21 +40,26 @@ export default {
   data() {
     return {
       items: [
-        new App("Trigger all alarms",["S serviceA","S serviceB","R relationshipC"]),
-        new App("Beep on new tweet",["S serviceA","S serviceB","R relationshipC"])
+        new App("TriggerAlarms",["S serviceA","S serviceB","R relationshipC"]),
+        new App("BeepTweet",["S serviceA","S serviceB","R relationshipC"])
       ]
     };
   },
   methods:{
-    expand: function (event){
-      var clickedElement = event.currentTarget;
-      //console.log(clickedElement.lastChild);
-      var content = clickedElement.lastChild.lastChild;
-      if (content.style.display === "block") {
-        content.style.display = "none";
-      } else {
-        content.style.display = "block";
+    reveal: function (evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("subtabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
       }
+      tablinks = document.getElementsByClassName("subtablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      //console.log(tabName);
+      document.getElementById(tabName).style.display = "block";
+      //onsole.log('element with id'+tabName+'now visible');
+      //evt.currentTarget.className += " active";
     },
     openForm: function (){
       document.getElementById("appForm").style.display = "block";
@@ -73,6 +69,11 @@ export default {
     }
   }
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("createApp").click();
+});
+
 </script>
 
 <style scoped>
@@ -167,5 +168,47 @@ img {
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
+}
+
+.subtab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 20%;
+  height: auto;
+}
+
+/* Style the buttons that are used to open the tab content */
+.subtab button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.subtab button:hover {
+  background-color: rgb(255, 185, 139);
+}
+
+/* Create an active/current "tab button" class */
+.subtab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.subtabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 80%;
+  border-left: none;
+  height: auto;
 }
 </style>

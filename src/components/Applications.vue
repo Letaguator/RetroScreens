@@ -1,54 +1,84 @@
 <template>
-<div>
-  <div class="subtab">
-    <button class="subtablinks" v-for="item in items" :key="item.name" v-on:click="reveal($event,item.name)" >
-        {{item.name}}
-    </button>
-    <button class="subtablinks" id="createApp" v-on:click="reveal($event,'appForm')">Add New</button>
+  <div>
+    <div class="subtab">
+      <button
+        class="subtablinks"
+        v-for="item in items"
+        :key="item.name"
+        v-on:click="reveal($event, item.name)"
+      >
+        {{ item.name }}
+      </button>
+      <button
+        class="subtablinks"
+        id="createApp"
+        v-on:click="reveal($event, 'appForm')"
+      >
+        Add New
+      </button>
+    </div>
   </div>
-</div>
 
-<div class="subtabcontent" v-for="item in items" :key="item.name" v-bind:id="item.name">
-  <strong> {{item.name}} </strong>
-  <p v-for="i in item.flow" :key="i.flow"> {{i}} </p>
-  <button type="button">Play/Pause</button>
-  <button type="button">Delete</button>
-  <button type="button">Edit</button>
-</div>
+  <div
+    class="subtabcontent"
+    v-for="item in items"
+    :key="item.name"
+    v-bind:id="item.name"
+  >
+    <strong> {{ item.name }} </strong>
+    <p v-for="i in item.flow" :key="i.flow">{{ i }}</p>
+    <button type="button">Play/Pause</button>
+    <button type="button">Delete</button>
+    <button type="button">Edit</button>
+  </div>
 
-<div class="subtabcontent" id="appForm">
-  <form action="" class="form-container">
-    <h4>Create a Relationship</h4>
+  <div class="subtabcontent" id="appForm">
+    <form action="" class="form-container">
+      <h4>Create a Relationship</h4>
 
-    <label for="ServiceName">Application Name</label>
-    <input type="text" placeholder="Select a name" name="ServiceName" required>
+      <label for="ServiceName">Application Name</label>
+      <input
+        type="text"
+        placeholder="Select a name"
+        name="ServiceName"
+        required
+      />
 
-    <label for="ServiceType">Routine</label>
-    <textarea id="w3review" name="w3review" rows="4" cols="50">
+      <label for="ServiceType">Routine</label>
+      <textarea id="w3review" name="w3review" rows="4" cols="50">
       Routine must be in format (write grammar here)
-    </textarea>
-    <br><br>
+    </textarea
+      >
+      <br /><br />
 
-    <button type="submit" class="btn">Add</button>
-    <!-- <button type="button" class="btn cancel" v-on:click="closeForm()">Cancel</button> -->
-  </form>
-</div>
-
+      <button type="submit" class="btn">Add</button>
+      <!-- <button type="button" class="btn cancel" v-on:click="closeForm()">Cancel</button> -->
+    </form>
+  </div>
 </template>
 
 <script>
-import {App} from "../classes/app.ts"
+import App from "../classes/app.ts";
 
 export default {
   data() {
     return {
       items: [
-        new App("TriggerAlarms",["S serviceA","S serviceB","R relationshipC"]),
-        new App("BeepTweet",["S serviceX","S serviceY","S ServiceC","R relationshipC"])
-      ]
+        new App("TriggerAlarms", [
+          "S serviceA",
+          "S serviceB",
+          "R relationshipC",
+        ]),
+        new App("BeepTweet", [
+          "S serviceX",
+          "S serviceY",
+          "S ServiceC",
+          "R relationshipC",
+        ]),
+      ],
     };
   },
-  methods:{
+  methods: {
     reveal: function (evt, tabName) {
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("subtabcontent");
@@ -63,24 +93,23 @@ export default {
       document.getElementById(tabName).style.display = "block";
       //console.log('element with id'+tabName+'now visible');
       evt.currentTarget.className += " active";
-    }
+    },
     // openForm: function (){
     //   document.getElementById("appForm").style.display = "block";
     // }
     // closeForm: function() {
     //   document.getElementById("appForm").style.display = "none";
     // }
-  }
+  },
 };
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("createApp").click();
 });
-
 </script>
 
 <style scoped>
-ul{
+ul {
   list-style-type: none;
 }
 /* Add rounded corners to the top left and the top right corner of the image */
@@ -117,7 +146,8 @@ img {
 }
 
 /* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
+.form-container input[type="text"],
+.form-container input[type="password"] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -126,20 +156,21 @@ img {
 }
 
 /* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus {
   background-color: #ddd;
   outline: none;
 }
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   opacity: 0.8;
 }
 
@@ -149,7 +180,8 @@ img {
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container .btn:hover,
+.open-button:hover {
   opacity: 1;
 }
 

@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="tab">
-      <button class="tablinks" v-on:click="reveal($event, 'Things')" id="defaultOpen">
+      <button
+        class="tablinks"
+        v-on:click="reveal($event, 'Things')"
+        id="defaultOpen"
+      >
         Things
       </button>
       <button class="tablinks" v-on:click="reveal($event, 'Services')">
@@ -41,14 +45,14 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType , defineComponent} from "vue";
+import Vue, { PropType, defineComponent } from "vue";
 import Things from "./components/Things.vue";
 import Services from "./components/Services.vue";
 import Relationships from "./components/Relationships.vue";
 import Applications from "./components/Applications.vue";
 import LogWindow from "./components/LogWindow.vue";
 import Panel from "./components/Panel.vue";
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer } = window.require("electron");
 
 export default defineComponent({
   components: {
@@ -56,20 +60,25 @@ export default defineComponent({
     Services,
     Relationships,
     Applications,
-    LogWindow,
-    Panel,
+    // LogWindow,
+    // Panel,
   },
-  mounted()
-  {
-    ((window as any).ipcRenderer as any).on("handle-iot-data", (evt, iotData) => {
-      console.log(iotData);
+  mounted() {
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("defaultOpen").click();
     });
 
-    var test = async () =>
-    {
+    ((window as any).ipcRenderer as any).on(
+      "handle-iot-data",
+      (evt, iotData) => {
+        console.log(iotData);
+      }
+    );
+
+    var test = async () => {
       ((window as any).ipcRenderer as any).send("get-iot-data");
       // ipcRenderer.invoke('get-iot-data');
-    }
+    };
 
     test();
   },
@@ -88,16 +97,16 @@ export default defineComponent({
       evt.currentTarget.className += " active";
     },
   },
-  data()
-  {
-    return { panels: [{id: 0, title: "X"}, {id: 1, title: "Y"}], dragging: false };
-  }
+  data() {
+    return {
+      panels: [
+        { id: 0, title: "X" },
+        { id: 1, title: "Y" },
+      ],
+      dragging: false,
+    };
+  },
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("defaultOpen").click();
-});
-
 </script>
 
 <style>

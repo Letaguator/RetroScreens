@@ -1,17 +1,17 @@
-import { createStore } from "vuex";
 import Vuex from "vuex";
+import { createStore } from "vuex";
 import Vue from "vue";
-import { Thing } from "./classes";
-import { Service } from "./classes";
-import { Relationship } from "./classes";
-import { App } from "./classes";
+import Service from "../classes/service";
+import Thing from "../classes/thing";
+import Relationship from "../classes/relationship";
+import App from "../classes/App";
 
 export const appStore = new Vuex.Store({
   state: {
-    things: [],
-    services: [],
-    relationships: [],
-    apps: [],
+    things: [] as Array<Thing>,
+    services: [] as Array<Service>,
+    relationships: [] as Array<Relationship>,
+    apps: [] as Array<App>,
   },
   mutations: {
     addThing(state, payload) {
@@ -34,11 +34,11 @@ export const appStore = new Vuex.Store({
     getServices: (state) => {
       return state.services;
     },
-    getServicebyThing: (state) => (thingName) =>{
-      let result = [] as Array<Service>;
-      for(let entry of state.services){
-        if (entry.thingID === thingName){
-          result.push(entry)
+    getServicebyThing: (state) => (thingName) => {
+      const result = [] as Array<Service>;
+      for (const entry of state.services) {
+        if (entry.thingID === thingName) {
+          result.push(entry);
         }
       }
       return result;

@@ -1,73 +1,78 @@
 <template>
-<div>
-  <ul id="listOfThings">
-  <li v-for="item in items" :key="item.name">
-    {{ item.message }}
-    <div class="card" v-on:click="expand($event)">
-      <!-- <img src="" alt=""> -->
-      <div class="container">
-      <h4>{{item.name}}</h4>
-      <h4>{{item.type}}</h4> 
-      <div class="content" id="unblurred">
-        <p>Service 1: {{item.serv1}}</p>
-        <p>Service 2: {{item.serv2}}</p>
-      </div>
-    </div>
-    </div>
-  </li>
-  </ul>
-</div>
+  <div>
+    <ul id="listOfThings">
+      <li v-for="item in items" :key="item.name">
+        {{ item.message }}
+        <div class="card" v-on:click="expand($event)">
+          <!-- <img src="" alt=""> -->
+          <div class="container">
+            <h4>{{ item.name }}</h4>
+            <h4>{{ item.type }}</h4>
+            <div class="content" id="unblurred">
+              <p>Service 1: {{ item.serv1 }}</p>
+              <p>Service 2: {{ item.serv2 }}</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-<button class="open-button" v-on:click="openForm()">Add New</button>
+  <button class="open-button" v-on:click="openForm()">Add New</button>
 
-<div class="form-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
-    <h4>Create a Relationship</h4>
+  <div class="form-popup" id="myForm">
+    <form action="/action_page.php" class="form-container">
+      <h4>Create a Relationship</h4>
 
-    <label for="ServiceName">Service Name</label>
-    <input type="text" placeholder="Select here" name="ServiceName" required>
+      <label for="ServiceName">Service Name</label>
+      <input
+        type="text"
+        placeholder="Select here"
+        name="ServiceName"
+        required
+      />
 
-    <label for="ServiceType">Service Type</label>
-    <select name="ServiceType" id="ServiceType">
-      <option value="Control">Control</option>
-      <option value="Drive">Drive</option>
-      <option value="Test">Test</option>
-      <option value="Interrupt">Interrupt</option>
-    </select>
-    <br><br>
-    <label for="ServiceType">Select Service 1</label>
-    <select name="ServiceType" id="ServiceType">
-      <option value="Control">Random</option>
-      <option value="Drive">Random</option>
-    </select>
-    <br><br>
-    <label for="ServiceType">Select Service 2</label>
-    <select name="ServiceType" id="ServiceType">
-      <option value="Control">Random</option>
-      <option value="Drive">Random</option>
-    </select>
-    <br><br>
-    <button type="submit" class="btn">Add</button>
-    <button type="button" class="btn cancel" v-on:click="closeForm()">Cancel</button>
-  </form>
-</div>
-
-
+      <label for="ServiceType">Service Type</label>
+      <select name="ServiceType" id="ServiceType">
+        <option value="Control">Control</option>
+        <option value="Drive">Drive</option>
+        <option value="Test">Test</option>
+        <option value="Interrupt">Interrupt</option>
+      </select>
+      <br /><br />
+      <label for="ServiceType">Select Service 1</label>
+      <select name="ServiceType" id="ServiceType">
+        <option value="Control">Random</option>
+        <option value="Drive">Random</option>
+      </select>
+      <br /><br />
+      <label for="ServiceType">Select Service 2</label>
+      <select name="ServiceType" id="ServiceType">
+        <option value="Control">Random</option>
+        <option value="Drive">Random</option>
+      </select>
+      <br /><br />
+      <button type="submit" class="btn">Add</button>
+      <button type="button" class="btn cancel" v-on:click="closeForm()">
+        Cancel
+      </button>
+    </form>
+  </div>
 </template>
 
 <script>
-import {Relationship} from "../classes/relationship.ts"
+import Relationship from "../classes/relationship.ts";
 export default {
   data() {
     return {
       items: [
-        new Relationship("Temp Alert","Control","temperature","led"),
-        new Relationship("Motion Alert","Drive","distancesensor","buzzer")
-      ]
+        new Relationship("Temp Alert", "Control", "temperature", "led"),
+        new Relationship("Motion Alert", "Drive", "distancesensor", "buzzer"),
+      ],
     };
   },
-  methods:{
-    expand: function (event){
+  methods: {
+    expand: function (event) {
       var clickedElement = event.currentTarget;
       //console.log(clickedElement.lastChild);
       var content = clickedElement.lastChild.lastChild;
@@ -77,26 +82,26 @@ export default {
         content.style.display = "block";
       }
     },
-    openForm: function (){
+    openForm: function () {
       document.getElementById("myForm").style.display = "block";
     },
-    closeForm: function() {
+    closeForm: function () {
       document.getElementById("myForm").style.display = "none";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-ul{
+ul {
   list-style-type: none;
 }
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 5px; /* 5px rounded corners */
-  width:100%;
+  width: 100%;
 }
 
 .content {
@@ -107,9 +112,8 @@ ul{
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-
 
 /* Add rounded corners to the top left and the top right corner of the image */
 img {
@@ -145,7 +149,8 @@ img {
 }
 
 /* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
+.form-container input[type="text"],
+.form-container input[type="password"] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -154,20 +159,21 @@ img {
 }
 
 /* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus {
   background-color: #ddd;
   outline: none;
 }
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   opacity: 0.8;
 }
 
@@ -177,11 +183,12 @@ img {
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container .btn:hover,
+.open-button:hover {
   opacity: 1;
 }
 
-body :not(#unblurred){
-    filter: blur(2px);    
+body :not(#unblurred) {
+  filter: blur(2px);
 }
 </style>

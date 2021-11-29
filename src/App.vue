@@ -120,8 +120,8 @@ document.addEventListener("DOMContentLoaded", function () {
   float: left;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  width: 30%;
-  height: 300px;
+  width: 20%;
+  height: 1000px;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -153,8 +153,8 @@ document.addEventListener("DOMContentLoaded", function () {
   float: left;
   padding: 0px 12px;
   border: 1px solid #ccc;
-  width: 70%;
+  width: 80%;
   border-left: none;
-  height: 300px;
+  height: 1000px;
 }
 </style>

@@ -43,14 +43,14 @@
 </template>
 
 <script>
-import {Application} from "../classes/app.ts"
+import {App} from "../classes/app.ts"
 
 export default {
   data() {
     return {
       items: [
-        // new Application("Trigger all alarms",makeUL(["S serviceA","S serviceB","R relationshipC"])),
-        // new Application("Beep on new tweet",makeUL(["S serviceA","S serviceB","R relationshipC"]))
+        new App("Trigger all alarms",["S serviceA","S serviceB","R relationshipC"]),
+        new App("Beep on new tweet",["S serviceA","S serviceB","R relationshipC"])
       ]
     };
   },
@@ -76,6 +76,10 @@ export default {
 </script>
 
 <style scoped>
+ul{
+  list-style-type: none;
+}
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;

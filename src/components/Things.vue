@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Thing from "../classes/thing"
+import {Thing} from "../classes/thing.ts"
 
 export default {
   data() {
@@ -46,6 +46,10 @@ export default {
 </script>
 
 <style scoped>
+ul{
+  list-style-type: none;
+}
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;

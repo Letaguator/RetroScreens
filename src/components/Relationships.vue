@@ -8,7 +8,7 @@
       <div class="container">
       <h4>{{item.name}}</h4>
       <h4>{{item.type}}</h4> 
-      <div class="content">
+      <div class="content" id="unblurred">
         <p>Service 1: {{item.serv1}}</p>
         <p>Service 2: {{item.serv2}}</p>
       </div>
@@ -61,8 +61,8 @@ export default {
   data() {
     return {
       items: [
-        new Relationship("Control","control","temperature","led"),
-        new Relationship("Drive","drive","distancesensor","buzzer")
+        new Relationship("Temp Alert","Control","temperature","led"),
+        new Relationship("Motion Alert","Drive","distancesensor","buzzer")
       ]
     };
   },
@@ -88,6 +88,10 @@ export default {
 </script>
 
 <style scoped>
+ul{
+  list-style-type: none;
+}
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
@@ -175,5 +179,9 @@ img {
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
+}
+
+body :not(#unblurred){
+    filter: blur(2px);    
 }
 </style>

@@ -9,8 +9,11 @@
 </div>
 
 <div class="subtabcontent" v-for="item in items" :key="item.name" v-bind:id="item.name">
-  <p> {{item.name}} </p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  <strong> {{item.name}} </strong>
+  <p v-for="i in item.flow" :key="i.flow"> {{i}} </p>
+  <button type="button">Play/Pause</button>
+  <button type="button">Delete</button>
+  <button type="button">Edit</button>
 </div>
 
 <div class="subtabcontent" id="appForm">
@@ -41,7 +44,7 @@ export default {
     return {
       items: [
         new App("TriggerAlarms",["S serviceA","S serviceB","R relationshipC"]),
-        new App("BeepTweet",["S serviceA","S serviceB","R relationshipC"])
+        new App("BeepTweet",["S serviceX","S serviceY","S ServiceC","R relationshipC"])
       ]
     };
   },

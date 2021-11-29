@@ -19,14 +19,14 @@
 </template>
 
 <script>
-import {Thing} from "../classes/thing.ts"
+import Thing from "../classes/thing"
 
 export default {
   data() {
     return {
         items: [
-      new Thing("Raspberry Pi","172.168.0.1","exampleSocket"),
-      new Thing("Raspberry Pi","172.168.0.1","exampleSocket")
+      new Thing("Raspberry Pi", "172.168.0.1", "exampleSocket"),
+      new Thing("Raspberry Pi", "172.168.0.1", "exampleSocket")
     ]
     }
   },

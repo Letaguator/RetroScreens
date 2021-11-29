@@ -3,7 +3,7 @@ export class Thing{
     ipAddress:string;
     socket:string
     picture:string;
-    constructor(nName:string,nAddress:string,nSocket){
+    constructor(nName:string, nAddress:string, nSocket:string){
         this.name = nName;
         this.ipAddress = nAddress;
         this.socket = nSocket;

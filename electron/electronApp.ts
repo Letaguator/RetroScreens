@@ -1,29 +1,34 @@
 // const electron = require('electron');
 // const app = electron.app;
 // const BrowserWindow = electron.BrowserWindow;
-import { app, BrowserWindow } from 'electron';
-import { ipcMain } from 'electron';
-import * as fs from 'fs';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from "path";
+import retrieveIoTData from "./multicastReader";
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     title: "Visual IoT",
-    width: 1000,
+    width: 1200,
     height: 800,
     webPreferences: {
-      preload: '../dist/index.html',
+      contextIsolation: false,
+      nodeIntegration: true,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
   
   // and load the index.html of the app.
   // mainWindow.loadFile("http://localhost:8080");
   mainWindow.loadFile('../../dist/index.html');
-
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 }
+
+ipcMain.on('get-iot-data', (event) => {
+  retrieveIoTData(event);
+  event.reply('handle-iot-data', 'abc')
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

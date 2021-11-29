@@ -12,4 +12,6 @@ window.addEventListener("DOMContentLoaded", () => {
       replaceText(`${type}-version`, (<any> process).versions[type as keyof NodeJS.ProcessVersions]);
     }
   });
-  
+
+import { contextBridge, ipcRenderer } from "electron";
+(window as any).ipcRenderer = ipcRenderer;

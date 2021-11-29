@@ -37,6 +37,7 @@
     <div id="Console" class="tabcontent">
       <Console />
     </div>
+    <!-- <Panel/> -->
   </div>
 </template>
 
@@ -47,6 +48,8 @@ import Services from "./components/Services.vue";
 import Relationships from "./components/Relationships.vue";
 import Applications from "./components/Applications.vue";
 import LogWindow from "./components/LogWindow.vue";
+import Panel from "./components/Panel.vue";
+const { ipcRenderer } = window.require('electron');
 
 @Options({
   components: {
@@ -55,6 +58,25 @@ import LogWindow from "./components/LogWindow.vue";
     Relationships,
     Applications,
     LogWindow,
+    Panel,
+  },
+  mounted()
+  {
+    ((window as any).ipcRenderer as any).on("handle-iot-data", (evt, iotData) => {
+      console.log(iotData);
+    });
+
+    var test = async () =>
+    {
+      ((window as any).ipcRenderer as any).send("get-iot-data");
+      // ipcRenderer.invoke('get-iot-data');
+    }
+
+    test();
+  },
+  data()
+  {
+    return {};
   },
   methods: {
     reveal: function (evt, tabName) {

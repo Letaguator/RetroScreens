@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="tab">
-      <button class="tablinks" v-on:click="reveal(event, 'Things')" id="defaultOpen">
+      <button class="tablinks" v-on:click="reveal($event, 'Things')" id="defaultOpen">
         Things
       </button>
-      <button class="tablinks" v-on:click="reveal(event, 'Services')">
+      <button class="tablinks" v-on:click="reveal($event, 'Services')">
         Services
       </button>
-      <button class="tablinks" v-on:click="reveal(event, 'Relationships')">
+      <button class="tablinks" v-on:click="reveal($event, 'Relationships')">
         Relationships
       </button>
-      <button class="tablinks" v-on:click="reveal(event, 'Applications')">
+      <button class="tablinks" v-on:click="reveal($event, 'Applications')">
         Applications
       </button>
-      <button class="tablinks" v-on:click="reveal(event, 'Console')">
+      <button class="tablinks" v-on:click="reveal($event, 'Console')">
         Console
       </button>
     </div>
@@ -90,7 +90,7 @@ const { ipcRenderer } = window.require('electron');
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
       document.getElementById(tabName).style.display = "block";
-      //evt.currentTarget.className += " active";
+      evt.currentTarget.className += " active";
     },
   },
 })

@@ -1,10 +1,10 @@
 <template>
 <div>
   <div class="subtab">
-    <button class="subtablinks" v-for="item in items" :key="item.name" v-on:click="reveal(event,item.name)" >
+    <button class="subtablinks" v-for="item in items" :key="item.name" v-on:click="reveal($event,item.name)" >
         {{item.name}}
     </button>
-    <button class="open-button" id="createApp" v-on:click="openForm()">Add New</button>
+    <button class="subtablinks" id="createApp" v-on:click="reveal($event,'appForm')">Add New</button>
   </div>
 </div>
 
@@ -27,7 +27,7 @@
     <br><br>
 
     <button type="submit" class="btn">Add</button>
-    <button type="button" class="btn cancel" v-on:click="closeForm()">Cancel</button>
+    <!-- <button type="button" class="btn cancel" v-on:click="closeForm()">Cancel</button> -->
   </form>
 </div>
 
@@ -56,17 +56,17 @@ export default {
       for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
-      //console.log(tabName);
+      console.log(tabName);
       document.getElementById(tabName).style.display = "block";
-      //onsole.log('element with id'+tabName+'now visible');
-      //evt.currentTarget.className += " active";
-    },
-    openForm: function (){
-      document.getElementById("appForm").style.display = "block";
-    },
-    closeForm: function() {
-      document.getElementById("appForm").style.display = "none";
+      //console.log('element with id'+tabName+'now visible');
+      evt.currentTarget.className += " active";
     }
+    // openForm: function (){
+    //   document.getElementById("appForm").style.display = "block";
+    // }
+    // closeForm: function() {
+    //   document.getElementById("appForm").style.display = "none";
+    // }
   }
 };
 
@@ -80,26 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
 ul{
   list-style-type: none;
 }
-
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  border-radius: 5px; /* 5px rounded corners */
-  width:100%;
-}
-
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-
 /* Add rounded corners to the top left and the top right corner of the image */
 img {
   border-radius: 5px 5px 0 0;
@@ -118,13 +98,13 @@ img {
 }
 
 /* The popup form - hidden by default */
-.form-popup {
+/* .form-popup {
   display: none;
   bottom: 0;
   right: 15px;
   border: 3px solid #f1f1f1;
   z-index: 9;
-}
+} */
 
 /* Add styles to the form container */
 .form-container {
@@ -199,7 +179,7 @@ img {
 
 /* Create an active/current "tab button" class */
 .subtab button.active {
-  background-color: #ccc;
+  background-color: rgb(255, 185, 139);
 }
 
 /* Style the tab content */

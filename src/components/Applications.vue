@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       items: [
-        // new Application("Lighting Ambience Check"),
         // new Application("Trigger all alarms",makeUL(["S serviceA","S serviceB","R relationshipC"])),
         // new Application("Beep on new tweet",makeUL(["S serviceA","S serviceB","R relationshipC"]))
       ]

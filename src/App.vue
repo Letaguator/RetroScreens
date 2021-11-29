@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="tab">
-      <button
-        class="tablinks"
-        v-on:click="reveal(event, 'Things')"
-        id="defaultOpen"
-      >
+      <button class="tablinks" v-on:click="reveal(event, 'Things')" id="defaultOpen">
         Things
       </button>
       <button class="tablinks" v-on:click="reveal(event, 'Services')">
@@ -14,11 +10,7 @@
       <button class="tablinks" v-on:click="reveal(event, 'Relationships')">
         Relationships
       </button>
-      <button
-        class="tablinks"
-        v-on:click="reveal(event, 'Applications')"
-        id="defaultOpen"
-      >
+      <button class="tablinks" v-on:click="reveal(event, 'Applications')">
         Applications
       </button>
       <button class="tablinks" v-on:click="reveal(event, 'Console')">
@@ -85,6 +77,7 @@ export default class App extends Vue {}
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("defaultOpen").click();
 });
+
 </script>
 
 <style>

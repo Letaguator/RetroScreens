@@ -1,4 +1,4 @@
-export class Thing{
+export default class Thing{
     name:string;
     ipAddress:string;
     socket:string

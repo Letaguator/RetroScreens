@@ -37,12 +37,11 @@
     <div id="Console" class="tabcontent">
       <Console />
     </div>
-    <!-- <Panel/> -->
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import Vue, { PropType , defineComponent} from "vue";
 import Things from "./components/Things.vue";
 import Services from "./components/Services.vue";
 import Relationships from "./components/Relationships.vue";
@@ -51,7 +50,7 @@ import LogWindow from "./components/LogWindow.vue";
 import Panel from "./components/Panel.vue";
 const { ipcRenderer } = window.require('electron');
 
-@Options({
+export default defineComponent({
   components: {
     Things,
     Services,
@@ -74,10 +73,6 @@ const { ipcRenderer } = window.require('electron');
 
     test();
   },
-  data()
-  {
-    return {};
-  },
   methods: {
     reveal: function (evt, tabName) {
       var i, tabcontent, tablinks;
@@ -93,8 +88,11 @@ const { ipcRenderer } = window.require('electron');
       evt.currentTarget.className += " active";
     },
   },
-})
-export default class App extends Vue {}
+  data()
+  {
+    return { panels: [{id: 0, title: "X"}, {id: 1, title: "Y"}], dragging: false };
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("defaultOpen").click();

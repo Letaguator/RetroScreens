@@ -34,6 +34,13 @@ export const appStore = new Vuex.Store({
     getServices: (state) => {
       return state.services;
     },
+    getIpAddressfromThing: (state) => (thingName) => {
+      for(const entry of state.things){
+        if(entry.thingID == thingName){
+          return entry.ipAddress;
+        }
+      }
+    },
     getServicebyThing: (state) => (thingName) => {
       const result = [] as Array<Service>;
       for (const entry of state.services) {

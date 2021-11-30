@@ -1,8 +1,4 @@
-// import Thing from "./classes/thing"
-// import Service from "./classes/service";
-// import Relationship from "./classes/relationship";
 import { ipcMain, IpcMainEvent } from 'electron';
-// import { appStore } from "./store/store";
 
 export default async function retrieveIoTData(evt: IpcMainEvent)
 {
@@ -27,37 +23,17 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
     });
     
     receiveSocket.on('message', function (message: string, remote: any) {
-        let obj = JSON.parse(message);
-        console.log(obj);
-        evt.reply("handle-iot-data", obj);
-        if(obj["Tweet Type"] == "Identity_Language"){
-            // let newThing = new Thing(obj["Thing ID"],obj["IP"],obj["Port"]);
-            // appStore.commit('addThing',newThing);
-            //add to thing store
+        try{
+            let obj = JSON.parse(message);
+            console.log(obj);
+            evt.reply("handle-iot-data", obj);
         }
-        else if(obj["Tweet Type"] == "Service"){
-            let inp = false;
-            let out = false;
-            let brackIndex = obj["API"].indexOf("[");
-            if(brackIndex + 1 == 'N' && brackIndex + 2 == 'U'){
-                inp = false;
-            }
-            else{
-                inp = true;
-            }
-            let parIndex = obj["API"].indexOf("(");
-            if(parIndex + 1 =='N' && parIndex + 2 == 'U'){
-                out = false;
-            }
-            else{
-                out = true;
-            }
-            // let newService = new Service(obj["Name"],obj["Thing ID"],out,inp);
-            // appStore.commit('addService',newService);
-        }
-        else if(obj["Tweet Type"] == "Relationship"){
-            // let nRelationship = new Relationship(obj["Name"],obj["Type"],obj["FS Name"],obj["SS Name"]);
-            // appStore.commit('addRelationship', nRelationship);
+        catch(e)
+        {
+            console.log("ERROR")
+            console.log(message)
+            console.log(e)
+            console.log("ERROR")
         }
     });
 
@@ -80,7 +56,7 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
         '{ "Tweet Type" : "Identity_Language","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Network Name" : "TP-Link_C50E","Communication Language" : "","IP" : "65.116.108.97","Port" : "6668" }',
         '{ "Tweet Type" : "Identity_Entity","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Name" : "","ID" : "SeansPiBoard","Type" : "","Owner" : "Sean","Vendor" : "","Description" : "" }',
         '{ "Tweet Type" : "Service","Name" : "DistanceSensor","Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "DistanceSensor:[NULL]:(detected,int, NULL)","Type" : "Report","AppCategory" : "Safety","Description" : "","Keywords" : "" }',
-        '{ "Tweet Type" : "Service","Name" : "Buzzer","Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Buzzer:["motionDetected",int, NULL]:(NULL)","Type" : "Action","AppCategory" : "Ambiance","Description" : "","Keywords" : "" }',
+        '{ "Tweet Type" : "Service","Name" : "Buzzer", "Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Buzzer:["motionDetected",int, NULL]:(NULL)","Type" : "Action","AppCategory" : "Ambiance","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Relationship","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Name" : "MotionDetector","Owner" : "Sean","Category" : "Cooperative","Type" : "control","Description" : "","FS name" : "DistanceSensor","SS name" : "Buzzer" }',
     ];
     for(let i = 0; i < tweets.length; i++)

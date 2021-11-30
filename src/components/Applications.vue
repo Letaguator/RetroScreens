@@ -103,9 +103,6 @@ export default {
   },
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("createApp").click();
-});
 </script>
 
 <style scoped>

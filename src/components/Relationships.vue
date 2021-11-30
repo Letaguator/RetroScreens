@@ -2,7 +2,7 @@
   <div>
     <ul id="listOfThings">
       <li v-for="item in items" :key="item.name">
-        {{ item.message }}
+        {{ item.name }}
         <div class="card" v-on:click="expand($event)">
           <!-- <img src="" alt=""> -->
           <div class="container">
@@ -60,15 +60,14 @@
   </div>
 </template>
 
-<script>
-import Relationship from "../classes/relationship.ts";
+<script lang="ts">
+import Relationship from "../classes/relationship";
+import { appStore } from "../store/store";
+
 export default {
   data() {
     return {
-      items: [
-        new Relationship("Temp Alert", "Control", "temperature", "led"),
-        new Relationship("Motion Alert", "Drive", "distancesensor", "buzzer"),
-      ],
+      items: appStore.getters.getServices as Array<Relationship>,
     };
   },
   methods: {

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <IoTLoader v-if="hasLoadedIoT === false"/>
+  <div v-else>
     <div class="tab">
       <button
         class="tablinks"
@@ -50,9 +51,15 @@ import Things from "./components/Things.vue";
 import Services from "./components/Services.vue";
 import Relationships from "./components/Relationships.vue";
 import Applications from "./components/Applications.vue";
+import IoTLoader from "./components/IoTLoader.vue";
 import LogWindow from "./components/LogWindow.vue";
 import Panel from "./components/Panel.vue";
+
 const { ipcRenderer } = window.require("electron");
+import { appStore } from "./store/store";
+import Thing from "./classes/thing"
+import Service from "./classes/service";
+import Relationship from "./classes/relationship";
 
 export default defineComponent({
   components: {
@@ -60,27 +67,56 @@ export default defineComponent({
     Services,
     Relationships,
     Applications,
+    IoTLoader,
     // LogWindow,
     // Panel,
   },
   mounted() {
-    document.addEventListener("DOMContentLoaded", function () {
-      document.getElementById("defaultOpen").click();
-    });
-
     ((window as any).ipcRenderer as any).on(
       "handle-iot-data",
       (evt, iotData) => {
+        let obj = iotData;
         console.log(iotData);
+        
+        if(obj["Tweet Type"] == "Identity_Language"){
+            let newThing = new Thing(obj["Thing ID"],obj["IP"],obj["Port"]);
+            appStore.commit('addThing', newThing);
+        }
+        else if(obj["Tweet Type"] == "Service"){
+            let inp = false;
+            let out = false;
+            let brackIndex = obj["API"].indexOf("[");
+            if(brackIndex + 1 == 'N' && brackIndex + 2 == 'U'){
+                inp = false;
+            }
+            else{
+                inp = true;
+            }
+            let parIndex = obj["API"].indexOf("(");
+            if(parIndex + 1 =='N' && parIndex + 2 == 'U'){
+                out = false;
+            }
+            else{
+                out = true;
+            }
+            let newService = new Service(obj["Name"],obj["Thing ID"],out,inp);
+            appStore.commit('addService', newService);
+        }
+        else if(obj["Tweet Type"] == "Relationship"){
+            let nRelationship = new Relationship(obj["Name"],obj["Type"],obj["FS Name"],obj["SS Name"]);
+            appStore.commit('addRelationship', nRelationship);
+        }
       }
     );
-
-    var test = async () => {
-      ((window as any).ipcRenderer as any).send("get-iot-data");
-      // ipcRenderer.invoke('get-iot-data');
-    };
-
-    test();
+    
+    ((window as any).ipcRenderer as any).send("get-iot-data");
+    setTimeout(() => {
+      this.hasLoadedIoT = true;
+      setTimeout(() =>
+      {
+        document.getElementById("defaultOpen").click();
+      }, 100);
+    }, 3/*5*/ * 1000);
   },
   methods: {
     reveal: function (evt, tabName) {
@@ -99,6 +135,7 @@ export default defineComponent({
   },
   data() {
     return {
+      hasLoadedIoT: false,
       panels: [
         { id: 0, title: "X" },
         { id: 1, title: "Y" },

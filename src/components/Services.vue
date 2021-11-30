@@ -4,12 +4,12 @@
     <!-- <ServiceDisplayer v-for="service in services" v-bind:key="service.name" v-bind:service="service"/> -->
     <ul id="listOfServices">
       <li v-for="item in items" :key="item.name">
-        {{ item.message }}
+        {{ item.name }}
         <div class="card" v-on:click="expand($event)">
           <!-- <img src="" alt=""> -->
           <div class="container">
             <h4>{{ item.name }}</h4>
-            <h4>{{ item.thingId }}</h4>
+            <h4>{{ item.thingID }}</h4>
             <div class="content">
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -25,11 +25,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // import Service from "./Service";
 // import ServiceDisplayer from "./ServiceDisplayer.vue";
 
-import Service from "../classes/service.ts";
+import { appStore } from "../store/store";
+import Service from "../classes/service";
+
 export default {
   //components: {ServiceDisplayer: ServiceDisplayer},
   //setup()
@@ -39,11 +41,7 @@ export default {
   //},
   data() {
     return {
-      items: [
-        new Service("Alarm", "Buzzer", true, true),
-        new Service("Stopwatch", "Buzzer", true, true),
-        new Service("Dice", "LED", true, true),
-      ],
+      items: appStore.getters.getServices as Array<Service>
     };
   },
   methods: {

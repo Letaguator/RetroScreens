@@ -1,13 +1,13 @@
 <template>
   <div>
     <ul id="listOfThings">
-      <li v-for="item in items" :key="item.ipaddress">
-        {{ item.message }}
+      <li v-for="thing in things" :key="thing.ipaddress">
+        {{ thing.message }}
         <div class="card" v-on:click="expand($event)">
           <!-- <img src="" alt=""> -->
           <div class="container">
-            <h4>{{ item.name }}</h4>
-            <h4>{{ item.ipAddress }}</h4>
+            <h4>{{ thing.name }}</h4>
+            <h4>{{ thing.ipAddress }}</h4>
             <div class="content">
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -23,16 +23,17 @@
   </div>
 </template>
 
-<script>
-import Thing from "../classes/thing.ts";
+<script lang="ts">
+import { appStore } from "../store/store";
+import Thing from "../classes/thing";
 
 export default {
+  mounted()
+  {
+  },
   data() {
     return {
-      items: [
-        new Thing("Raspberry Pi", "172.168.0.1", "exampleSocket"),
-        new Thing("Raspberry Pi", "172.168.0.1", "exampleSocket"),
-      ],
+      things: appStore.getters.getThings,
     };
   },
   methods: {

@@ -49,12 +49,13 @@ export default defineComponent({
                 inp = true;
             }
             let parIndex = obj["API"].indexOf("(");
-            if(parIndex + 1 =='N' && parIndex + 2 == 'U'){
+            if(obj["API"][parIndex + 1] =='N' && obj["API"][parIndex + 2] == 'U'){
                 out = false;
             }
             else{
                 out = true;
             }
+            console.log(out);
             let newService = new Service(obj["Name"],obj["Thing ID"],out,inp);
             appStore.commit('addService', newService);
         }

@@ -36,20 +36,22 @@
       <select name="ServiceType" id="ServiceType">
         <option value="Control">Control</option>
         <option value="Drive">Drive</option>
-        <option value="Test">Test</option>
-        <option value="Interrupt">Interrupt</option>
+        <option value="Support">Support</option>
+        <option value="Contest">Contest</option>
       </select>
       <br /><br />
       <label for="ServiceType">Select Service 1</label>
       <select name="ServiceType" id="ServiceType">
-        <option value="Control">Random</option>
-        <option value="Drive">Random</option>
+        <option>Select Here</option>
+        <option v-for="input in inputs" :key="input.name">
+        {{ input.name }} </option>
       </select>
       <br /><br />
       <label for="ServiceType">Select Service 2</label>
       <select name="ServiceType" id="ServiceType">
-        <option value="Control">Random</option>
-        <option value="Drive">Random</option>
+        <option>Select Here</option>
+        <option v-for="output in outputs" :key="output.name">
+        {{ output.name}} </option>
       </select>
       <br /><br />
       <button type="submit" class="btn">Add</button>
@@ -62,14 +64,16 @@
 
 <script lang="ts">
 import Relationship from "../classes/relationship";
+import Service from "../classes/service";
 import { appStore } from "../store/store";
-
 
 
 export default {
   data() {
     return {
       items: appStore.getters.getRelationships as Array<Relationship>,
+      inputs: appStore.getters.getServicebyInput as Array<Service>,
+      outputs: appStore.getters.getServicebyOutput as Array<Service>,
     };
   },
   methods: {

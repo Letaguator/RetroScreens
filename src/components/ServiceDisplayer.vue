@@ -1,7 +1,6 @@
 <template>
   <div>
-    <p>Test</p>
-    <p>{{ service.name }}</p>
+    <h3>{{ service.name }}</h3>
     <p>{{ service.thingID }}</p>
   </div>
 </template>
@@ -20,4 +19,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+  div {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 2px;
+    background-color: antiquewhite;
+  }
+</style>

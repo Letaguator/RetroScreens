@@ -61,8 +61,21 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
     ];
     for(let i = 0; i < tweets.length; i++)
     {
-        receiveSocket.send(tweets[i], port, mcast);
-        await sleep(250);
+        var message = tweets[i];
+        try{
+            let obj = JSON.parse(message);
+            console.log(obj);
+            evt.reply("handle-iot-data", obj);
+        }
+        catch(e)
+        {
+            console.log("ERROR")
+            console.log(message)
+            console.log(e)
+            console.log("ERROR")
+        }
+        // receiveSocket.send(tweets[i], port, mcast);
+        await sleep(150);
     }
 }
 

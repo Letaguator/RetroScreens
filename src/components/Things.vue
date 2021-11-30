@@ -24,13 +24,11 @@
 </template>
 
 <script lang="ts">
+import Vue, { PropType, defineComponent } from "vue";
 import { appStore } from "../store/store";
 import Thing from "../classes/thing";
 
-export default {
-  mounted()
-  {
-  },
+export default defineComponent({
   data() {
     return {
       things: appStore.getters.getThings,
@@ -48,7 +46,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>

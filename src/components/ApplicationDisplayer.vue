@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-on:click="openApplication">
     <h3>{{ application.name }}</h3>
     <button>&#9654;</button>
     <button>&#9646; &#9646;</button>
@@ -8,6 +8,7 @@
 
 <script lang="ts">
 import Vue, { PropType, defineComponent } from "vue";
+import { appStore } from "../store/store";
 import App from "../classes/app";
 
 export default defineComponent({
@@ -17,6 +18,11 @@ export default defineComponent({
       required: true,
     },
   },
+  methods: {
+    openApplication() {
+      appStore.commit('setActiveApp', this.application);
+    }
+  }
 });
 </script>
 
@@ -28,5 +34,13 @@ export default defineComponent({
     margin: 2px;
     padding: 2px;
     background-color: antiquewhite;
+  }
+  
+  div:hover {
+    background-color: whitesmoke;
+  }
+
+  div:active {
+    background-color: grey;
   }
 </style>

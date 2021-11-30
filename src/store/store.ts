@@ -8,12 +8,16 @@ import App from "../classes/app";
 
 export const appStore = new Vuex.Store({
   state: {
+    activeApp: null as App,
     things: [] as Array<Thing>,
     services: [] as Array<Service>,
     relationships: [] as Array<Relationship>,
     apps: [] as Array<App>,
   },
   mutations: {
+    setActiveApp(state, payload) {
+      state.activeApp = payload;
+    },
     addThing(state, payload) {
       state.things.push(payload);
     },
@@ -28,6 +32,9 @@ export const appStore = new Vuex.Store({
     },
   },
   getters: {
+    getActiveApp(state) {
+      return state.activeApp;
+    },
     getThings: (state) => {
       return state.things;
     },

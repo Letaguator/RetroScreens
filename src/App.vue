@@ -86,7 +86,7 @@ export default defineComponent({
             let inp = false;
             let out = false;
             let brackIndex = obj["API"].indexOf("[");
-            if(brackIndex + 1 == 'N' && brackIndex + 2 == 'U'){
+            if(obj["API"][brackIndex + 1] == 'N' && obj["API"][brackIndex + 2] == 'U'){
                 inp = false;
             }
             else{
@@ -103,7 +103,7 @@ export default defineComponent({
             appStore.commit('addService', newService);
         }
         else if(obj["Tweet Type"] == "Relationship"){
-            let nRelationship = new Relationship(obj["Name"],obj["Type"],obj["FS Name"],obj["SS Name"]);
+            let nRelationship = new Relationship(obj["Name"],obj["Type"],obj["FS name"],obj["SS name"]);
             appStore.commit('addRelationship', nRelationship);
         }
       }

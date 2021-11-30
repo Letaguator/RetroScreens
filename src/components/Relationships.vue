@@ -64,10 +64,12 @@
 import Relationship from "../classes/relationship";
 import { appStore } from "../store/store";
 
+
+
 export default {
   data() {
     return {
-      items: appStore.getters.getServices as Array<Relationship>,
+      items: appStore.getters.getRelationships as Array<Relationship>,
     };
   },
   methods: {

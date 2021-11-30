@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>Services</p> -->
     <ServiceDisplayer v-for="service in services" v-bind:key="service.name" v-bind:service="service"/>
   </div>
 </template>

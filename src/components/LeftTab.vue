@@ -4,11 +4,10 @@
             <h2>IoT - Explorer</h2>
         </div>
         <div class="tab">
-            <button
-                class="tablinks"
-                v-on:click="reveal($event, 'Things')"
-                id="defaultOpen"
-            >
+            <button id="defaultOpen" class="tablinks" v-on:click="reveal($event, 'Applications')">
+                Applications
+            </button>
+            <button class="tablinks" v-on:click="reveal($event, 'Things')" >
                 Things
             </button>
             <button class="tablinks" v-on:click="reveal($event, 'Services')">
@@ -17,32 +16,29 @@
             <button class="tablinks" v-on:click="reveal($event, 'Relationships')">
                 Relationships
             </button>
-            <button class="tablinks" v-on:click="reveal($event, 'Applications')">
-                Applications
-            </button>
             <button class="tablinks" v-on:click="reveal($event, 'Console')">
                 Console
             </button>
         </div>
 
-        <div id="Things" class="tabcontent">
-        <Things />
-        </div>
-
-        <div id="Services" class="tabcontent">
-        <Services />
+        <div id="Applications" class="tabcontent">
+            <Applications />
         </div>
 
         <div id="Relationships" class="tabcontent">
-        <Relationships />
+            <Relationships />
         </div>
 
-        <div id="Applications" class="tabcontent">
-        <Applications />
+        <div id="Things" class="tabcontent">
+            <Things />
+        </div>
+
+        <div id="Services" class="tabcontent">
+            <Services />
         </div>
 
         <div id="Console" class="tabcontent">
-        <Console />
+            <Console />
         </div>
   </div>
 </template>

@@ -4,7 +4,7 @@ import Vue from "vue";
 import Service from "../classes/service";
 import Thing from "../classes/thing";
 import Relationship from "../classes/relationship";
-import App from "../classes/App";
+import App from "../classes/app";
 
 export const appStore = new Vuex.Store({
   state: {

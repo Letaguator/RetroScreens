@@ -1,69 +1,39 @@
 <template>
   <div>
-    <div class="subtab">
-      <button
-        class="subtablinks"
-        v-for="item in items"
-        :key="item.name"
-        v-on:click="reveal($event, item.name)"
-      >
-        {{ item.name }}
-      </button>
-      <button
-        class="subtablinks"
-        id="createApp"
-        v-on:click="reveal($event, 'appForm')"
-      >
-        Add New
-      </button>
-    </div>
+    <ApplicationDisplayer v-for="application in applications" v-bind:key="application.name" v-bind:application="application"/>
   </div>
-
-  <div
-    class="subtabcontent"
-    v-for="item in items"
-    :key="item.name"
-    v-bind:id="item.name"
-  >
-    <strong> {{ item.name }} </strong>
-    <p v-for="i in item.flow" :key="i.flow">{{ i }}</p>
-    <button type="button">Play/Pause</button>
-    <button type="button">Delete</button>
-    <button type="button">Edit</button>
-  </div>
-
-  <div class="subtabcontent" id="appForm">
-    <form action="" class="form-container">
-      <h4>Create a Relationship</h4>
-
-      <label for="ServiceName">Application Name</label>
-      <input
-        type="text"
-        placeholder="Select a name"
-        name="ServiceName"
-        required
-      />
-
-      <label for="ServiceType">Routine</label>
-      <textarea id="w3review" name="w3review" rows="4" cols="50">
-      Routine must be in format (write grammar here)
-    </textarea
-      >
-      <br /><br />
-
-      <button type="submit" class="btn">Add</button>
-      <!-- <button type="button" class="btn cancel" v-on:click="closeForm()">Cancel</button> -->
-    </form>
+  <div>
+    <input type="text" v-model="newAppName" />
+    <button v-on:click="createApplication">Create Application</button>
   </div>
 </template>
 
-<script>
-import App from "../classes/app.ts";
+<script lang="ts">
+import Vue, { PropType, defineComponent } from "vue";
+import App from "../classes/app";
+import ApplicationDisplayer from "./ApplicationDisplayer.vue";
 
-export default {
+export default defineComponent({
+  components: {
+    ApplicationDisplayer
+  },
+  methods: {
+    createApplication() {
+      if(this.newAppName.length > 1 && this.newAppName.length <= 16)
+      {
+        let app = new App(this.newAppName, [] as Array<string>);
+        this.applications.push(app);
+        this.newAppName = "";
+      }
+      else{
+        alert("App name must be between 2 and 16 chars");
+      }
+    }
+  },
   data() {
     return {
-      items: [
+      newAppName: "",
+      applications: [
         new App("TriggerAlarms", [
           "S serviceA",
           "S serviceB",
@@ -77,31 +47,8 @@ export default {
         ]),
       ],
     };
-  },
-  methods: {
-    reveal: function (evt, tabName) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("subtabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("subtablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-      console.log(tabName);
-      document.getElementById(tabName).style.display = "block";
-      //console.log('element with id'+tabName+'now visible');
-      evt.currentTarget.className += " active";
-    },
-    // openForm: function (){
-    //   document.getElementById("appForm").style.display = "block";
-    // }
-    // closeForm: function() {
-    //   document.getElementById("appForm").style.display = "none";
-    // }
-  },
-};
+  }
+});
 
 </script>
 

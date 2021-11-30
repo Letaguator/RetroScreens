@@ -36,7 +36,7 @@ export const appStore = new Vuex.Store({
     },
     getIpAddressfromThing: (state) => (thingName) => {
       for(const entry of state.things){
-        if(entry.thingID == thingName){
+        if(entry.name == thingName){
           return entry.ipAddress;
         }
       }

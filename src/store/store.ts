@@ -43,6 +43,24 @@ export const appStore = new Vuex.Store({
       }
       return result;
     },
+    getServicebyInput: (state) => {
+      const result = [] as Array<Service>;
+      for (const entry of state.services){
+        if(entry.input == true){
+          result.push(entry);
+        }
+      }
+      return result;
+    },
+    getServicebyOutput: (state) => {
+      const result = [] as Array<Service>;
+      for (const entry of state.services){
+        if(entry.output == true){
+          result.push(entry);
+        }
+      }
+      return result;
+    },
     getRelationships: (state) => {
       return state.relationships;
     },

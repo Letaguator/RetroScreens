@@ -88,12 +88,9 @@ export default defineComponent({
         background-color: #7087B8;
         width: 350px;
     }
-
     * {
-    box-sizing: border-box;
+        box-sizing: border-box;
     }
-
-    /* Style the tab */
     .tab {
         display: flex;
         flex-direction: row;
@@ -103,40 +100,34 @@ export default defineComponent({
         width: 100%;
     }
 
-    /* Style the buttons that are used to open the tab content */
     .tab button {
-    display: block;
-    background-color: inherit;
-    color: black;
-    padding: 8px 4px;
-    width: 100%;
-    border: none;
-    outline: none;
-    text-align: left;
-    cursor: pointer;
-    transition: 0.3s;
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 8px 4px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
     }
 
-    /* Change background color of buttons on hover */
     .tab button:hover {
-    background-color: #ddd;
+        background-color: #ddd;
     }
 
-    /* Create an active/current "tab button" class */
     .tab button.active {
-    background-color: #ccc;
+        background-color: #ccc;
     }
 
-    /* Style the tab content */
     .tabcontent {
-    float: left;
-    padding: 0px 12px;
-    border: 1px solid #ccc;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-left: none;
-    height: auto;
+        float: left;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-left: none;
+        height: auto;
     }
 </style>

@@ -56,7 +56,6 @@ export default defineComponent({
             else{
                 out = true;
             }
-            console.log(out);
             let newService = new Service(obj["Name"],obj["Thing ID"],out,inp);
             appStore.commit('addService', newService);
         }

@@ -71,7 +71,7 @@ export default defineComponent({
     height: 48px;
   }
 
-  button
+  input, button
   {
     height: 32px;
   }

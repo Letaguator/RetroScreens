@@ -2,50 +2,50 @@ import { ipcMain, IpcMainEvent } from 'electron';
 
 export default async function retrieveIoTData(evt: IpcMainEvent)
 {
-    const os = require('os');
-    const dgram = require('dgram');
+    // const os = require('os');
+    // const dgram = require('dgram');
 
-    const nets = os.networkInterfaces();
-    console.log(nets['Wi-Fi']);
-    var host = nets['Wi-Fi'][1];
-    const port = 8088;
-    const mcast = "232.1.1.1";
+    // const nets = os.networkInterfaces();
+    // console.log(nets['Wi-Fi']);
+    // var host = nets['Wi-Fi'][1];
+    // const port = 8088;
+    // const mcast = "232.1.1.1";
     
-    var receiveSocket = dgram.createSocket('udp4');
+    // var receiveSocket = dgram.createSocket('udp4');
     
-    receiveSocket.on('listening', function() {
-        const address = receiveSocket.address();
-        console.log("Listening on " + address.address + ":" + address.port);
-        receiveSocket.addMembership(mcast, host.address);
-        receiveSocket.setBroadcast(true);
-        receiveSocket.setMulticastTTL(128);
-        receiveSocket.setMulticastLoopback(true);
-    });
+    // receiveSocket.on('listening', function() {
+    //     const address = receiveSocket.address();
+    //     console.log("Listening on " + address.address + ":" + address.port);
+    //     receiveSocket.addMembership(mcast, host.address);
+    //     receiveSocket.setBroadcast(true);
+    //     receiveSocket.setMulticastTTL(128);
+    //     receiveSocket.setMulticastLoopback(true);
+    // });
     
-    receiveSocket.on('message', function (message: string, remote: any) {
-        try{
-            let obj = JSON.parse(message);
-            console.log(obj);
-            evt.reply("handle-iot-data", obj);
-        }
-        catch(e)
-        {
-            console.log("ERROR")
-            console.log(message)
-            console.log(e)
-            console.log("ERROR")
-        }
-    });
+    // receiveSocket.on('message', function (message: string, remote: any) {
+    //     try{
+    //         let obj = JSON.parse(message);
+    //         console.log(obj);
+    //         evt.reply("handle-iot-data", obj);
+    //     }
+    //     catch(e)
+    //     {
+    //         console.log("ERROR")
+    //         console.log(message)
+    //         console.log(e)
+    //         console.log("ERROR")
+    //     }
+    // });
 
-    receiveSocket.on('close', function (err: string) {
-        console.log("Socket closed");
-    });
+    // receiveSocket.on('close', function (err: string) {
+    //     console.log("Socket closed");
+    // });
 
-    receiveSocket.on('error', function (err: string) {
-        console.log("[Socket error]" + err);
-    });
+    // receiveSocket.on('error', function (err: string) {
+    //     console.log("[Socket error]" + err);
+    // });
     
-    receiveSocket.bind(port);
+    // receiveSocket.bind(port);
 
     var tweets = [
         '{ "Tweet Type" : "Identity_Thing","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Name" : "","Model" : "","Vendor" : "","Owner" : "Mathias","Description" : "","OS" : "Raspbian" }',

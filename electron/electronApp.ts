@@ -4,6 +4,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from "path";
 import retrieveIoTData from "./multicastReader";
+import { loadAppsFromWorkDirectory, saveAppToWorkDirectory } from "./projectLoader";
 
 function createWindow() {
   // Create the browser window.
@@ -11,6 +12,7 @@ function createWindow() {
     title: "Visual IoT",
     width: 1200,
     height: 800,
+    autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
@@ -20,7 +22,7 @@ function createWindow() {
   
   // and load the index.html of the app.
   // mainWindow.loadFile("http://localhost:8080");
-  mainWindow.loadFile('../../dist/index.html');
+  mainWindow.loadFile('./dist/index.html');
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 }
@@ -28,6 +30,15 @@ function createWindow() {
 ipcMain.on('get-iot-data', (event) => {
   retrieveIoTData(event);
   event.reply('handle-iot-data', 'abc')
+});
+
+ipcMain.on('save-app', (event, appData) => {
+  saveAppToWorkDirectory(appData);
+});
+
+ipcMain.on('load-apps', (event) => {
+  let apps = loadAppsFromWorkDirectory();
+  event.returnValue = apps;
 });
 
 // This method will be called when Electron has finished

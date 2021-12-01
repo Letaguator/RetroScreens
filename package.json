@@ -2,12 +2,13 @@
   "name": "visual-iot",
   "version": "1.0.0",
   "private": true,
+  "main": "./electron/dist/electronApp.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "oStart": "tsc --project ./electron/tsconfig.json && npm run build && vue-cli-service & sleep 5 && electron ./electron/electron.js",
-    "start": "tsc --project ./electron/tsconfig.json && npm run build && electron ./electron/dist/electronApp.js"
+    "start": "tsc --project ./electron/tsconfig.json && npm run build && electron ."
   },
   "dependencies": {
     "@syncfusion/ej2-vue-navigations": "^19.3.54",

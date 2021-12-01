@@ -14,11 +14,13 @@ import LeftTab from "./components/LeftTab.vue";
 import Editor from "./components/Editor.vue";
 import Panel from "./components/Panel.vue";
 
-const { ipcRenderer } = window.require("electron");
 import { appStore } from "./store/store";
 import Thing from "./classes/thing"
 import Service from "./classes/service";
 import Relationship from "./classes/relationship";
+import App from "./classes/app";
+
+const { ipcRenderer } = window.require("electron");
 
 export default defineComponent({
   components: {
@@ -28,11 +30,10 @@ export default defineComponent({
     // LogWindow,
   },
   mounted() {
-    ((window as any).ipcRenderer as any).on(
+    (ipcRenderer as any).on(
       "handle-iot-data",
       (evt, iotData) => {
         let obj = iotData;
-        console.log(iotData);
         
         if(obj["Tweet Type"] == "Identity_Language"){
             let newThing = new Thing(obj["Thing ID"],obj["IP"],obj["Port"]);
@@ -66,7 +67,13 @@ export default defineComponent({
       }
     );
     
-    ((window as any).ipcRenderer as any).send("get-iot-data");
+    let appDatas = (ipcRenderer as any).sendSync("load-apps");
+    for(const appData of appDatas)
+    {
+      appStore.commit('addApp', new App(appData.name, appData.src, true));
+    }
+
+    (ipcRenderer as any).send("get-iot-data");
     setTimeout(() => {
       this.hasLoadedIoT = true;
       setTimeout(() =>

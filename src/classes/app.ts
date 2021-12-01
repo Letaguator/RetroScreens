@@ -2,10 +2,16 @@ export default class App {
   name: string;
   flow: string[];
   picture: string;
-  constructor(nName: string, nFlow: string[]) {
+  src: string;
+  saved: boolean;
+
+  constructor(nName: string, src: string, saved: boolean) {
     this.name = nName;
-    this.flow = nFlow;
+    this.src = src;
+    this.flow = this.src.split("/n");
+    this.saved = saved;
   }
+
   getName() {
     return this.name;
   }

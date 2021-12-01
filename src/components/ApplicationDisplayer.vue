@@ -1,6 +1,9 @@
 <template>
   <div v-on:click="openApplication">
-    <h3>{{ application.name }}</h3>
+    <h3>
+      {{ application.name }}
+      <span v-if="application.saved === false">*</span>
+    </h3>
     <button>&#9654;</button>
     <button>&#9646; &#9646;</button>
   </div>

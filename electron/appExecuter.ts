@@ -1,102 +1,148 @@
-import * as fs from 'fs';
-import * as rd from 'readline';
 
-import {LinearBackoff, WebsocketBuilder} from 'websocket-ts';
-import {appStore}  from "../src/store/store";
+// import { Websocket } from 'websocket-ts';
+// import {WebsocketBuilder} from 'websocket-ts';
+// import {appStore}  from "../src/store/store";
 
-import Service from '../src/classes/service';
-import Relationship from '../src/classes/relationship';
-import { app } from 'electron';
-import Thing from '../src/classes/thing';
+// import Service from './classes/service';
+// import Relationship from './classes/relationship';
+
+const WebSocket = require('ws');
 
 const connectionIP='192.168.0.227'
 const connectionPort='6668'
 
 class callHandler{
-    ws;
+    ip:string;
+    portNumber:string;
     constructor(ip:string,portNumber:string){
-        this.ws = new WebsocketBuilder('ws://'+ip+':'+portNumber)
-        .onOpen((ws, e) => { console.log("Connected to Thing") })
-        .onClose((ws, e) => { console.log("Closed") })
-        .onError((ws, e) => { console.log("Error") })
-        .build();
+        this.ip=ip;
+        this.portNumber=portNumber;
     }
 
-    evalService(serviceObj:Service,line:string){
-        if (!serviceObj.input)
-        {
-            var objToSend = {
-                TweetType: 'Service',
-                ThingID: 'SeansPi',
-                SpaceID:'RetroScreens',
-                ServiceName: serviceObj.getName(),
-                ServiceInputs: ''
-            }
-            this.ws.send(JSON.stringify(objToSend))
-        }
-        else{
-            var inputs = line.split(' ')
-            var payload=''
-            inputs.forEach(()=>{
-                payload+=''+inputs
-            })
-            this.ws.send(payload)
-        }
-        var data='';
-        // this.ws.onMessage((ws, e) => { 
-        //     console.log('reply from Thing'+e.data) 
-        //     data=JSON.parse(e.data);
-        // })
-        return data;
-    }
+    // evalService(serviceObj:Service,line:string){
+    //     if (!serviceObj.input)
+    //     {
+    //         var objToSend = {
+    //             TweetType: 'Service',
+    //             ThingID: 'SeansPi',
+    //             SpaceID:'RetroScreens',
+    //             ServiceName: serviceObj.getName(),
+    //             ServiceInputs: ''
+    //         }
+    //         this.ws.send(JSON.stringify(objToSend))
+    //     }
+    //     else{
+    //         var inputs = line.split(' ')
+    //         var payload=''
+    //         inputs.forEach(()=>{
+    //             payload+=''+inputs
+    //         })
+    //         this.ws.send(payload)
+    //     }
+    //     var data='';
+    //     // this.ws.onMessage((ws, e) => { 
+    //     //     console.log('reply from Thing'+e.data) 
+    //     //     data=JSON.parse(e.data);
+    //     // })
+    //     return data;
+    // }
 
-    evalRelationship(relationshipObj:Relationship,line:string){
-
-        var serviceA=appStore.getters.getServicebyName(relationshipObj.getFirstService())
-        var serviceB=appStore.getters.getServicebyName(relationshipObj.getSecondService())
-
-        if (relationshipObj.type in ['drive']){
-            var outputFromA=this.evalService(serviceA,line)
-            this.evalService(serviceB,outputFromA)
+    evalService(line:string){
+        var words=line.split(' ')
+        var objToSend = {
+            TweetType: 'Service',
+            ThingID: 'SeansPi',
+            SpaceID:'RetroScreens',
+            ServiceName: words[1],
+            ServiceInputs: '()'
         }
-        else if (relationshipObj.type in ['contest']){
+        // if (words.length>2)
+        // {
+        //     objToSend.ServiceInputs=words.join(",").replace(words[0],'')
+        // }
+        console.log(JSON.stringify(objToSend))
+        // var ws = new WebSocket('ws://'+this.ip+':'+this.portNumber)
+        // var data=''
+        // ws.onopen = function() {
+        //     ws.send(JSON.stringify(objToSend))
+        //   };
+        //ws.send(JSON.stringify(objToSend))
 
-        }
-        else if (relationshipObj.type in[]){
+        const Net = require('net')
+        const client = new Net.Socket();
 
-        }
+        client.connect({port:this.portNumber,host:this.ip}, function(){
+            client.write("{\"Service Inputs\":\"()\",\"Tweet Type\":\"Service\",\"Thing ID\":\"SeansPi\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"DistanceSensor\"}");
+        });
+        return true;
     }
 }
 
-export function executeApp(inputFilePath:string) {
-    try{
-        var reader = rd.createInterface(fs.createReadStream(inputFilePath));
-        var handler = new callHandler(connectionIP,connectionPort)
-        reader.on("line",(l:string)=>{
-            l=l.toLowerCase()
-            if (l.startsWith('S')){
-                var serviceObj=appStore.getters.getServiceByName(l.split(' ')[1])
-                handler.evalService(serviceObj,l)
-            }
-            else if (l.startsWith('R')){
-                var relationshipObj=appStore.getters.getRelationshipByName(l.split(' ')[1])
-                handler.evalRelationship(relationshipObj,l)
-            }
-            // else if(l.startsWith('if')){
+    // evalRelationship(relationshipObj:Relationship,line:string){
+
+    //     var serviceA=appStore.getters.getServicebyName(relationshipObj.getFirstService())
+    //     var serviceB=appStore.getters.getServicebyName(relationshipObj.getSecondService())
+
+    //     if (relationshipObj.type in ['drive']){
+    //         var outputFromA=this.evalService(serviceA,line)
+    //         this.evalService(serviceB,outputFromA)
+    //     }
+    //     else if (relationshipObj.type in ['contest']){
+
+    //     }
+    //     else if (relationshipObj.type in[]){
+
+    //     }
+    // }
+
+    // evalRelationship(relationshipObj:Relationship,line:string){
+
+    //     var serviceA=appStore.getters.getServicebyName(relationshipObj.getFirstService())
+    //     var serviceB=appStore.getters.getServicebyName(relationshipObj.getSecondService())
+
+    //     if (relationshipObj.type in ['drive']){
+    //         var outputFromA=this.evalService(serviceA,line)
+    //         this.evalService(serviceB,outputFromA)
+    //     }
+    //     else if (relationshipObj.type in ['contest']){
+
+    //     }
+    //     else if (relationshipObj.type in[]){
+
+    //     }
+    // }
+
+
+
+// export function executeApp(inputFilePath:string) {
+//     try{
+//         var reader = rd.createInterface(fs.createReadStream(inputFilePath));
+//         var handler = new callHandler(connectionIP,connectionPort)
+//         reader.on("line",(l:string)=>{
+//             l=l.toLowerCase()
+//             if (l.startsWith('S')){
+//                 var serviceObj=appStore.getters.getServiceByName(l.split(' ')[1])
+//                 handler.evalService(serviceObj,l)
+//             }
+//             else if (l.startsWith('R')){
+//                 var relationshipObj=appStore.getters.getRelationshipByName(l.split(' ')[1])
+//                 handler.evalRelationship(relationshipObj,l)
+//             }
+//             // else if(l.startsWith('if')){
                 
-            // }
-            else{
-                console.log('app format invalid')
-                return false;
-            }
-            console.log('finishing running app from '+inputFilePath)
-            return true;
-        })
-    }
-    catch(Exception){
-        console.log("aborting with exception")
-    }
-}
+//             // }
+//             else{
+//                 console.log('app format invalid')
+//                 return false;
+//             }
+//             console.log('finishing running app from '+inputFilePath)
+//             return true;
+//         })
+//     }
+//     catch(Exception){
+//         console.log("aborting with exception")
+//     }
+// }
 
 export default function executeTheApp(lines:string[]) {
     try{
@@ -104,17 +150,14 @@ export default function executeTheApp(lines:string[]) {
         //var reader = rd.createInterface(fs.createReadStream(inputFilePath));
         var handler = new callHandler(connectionIP,connectionPort)
         lines.forEach((l)=>{
-            l=l.toLowerCase()
+            console.log(l)
             if (l.startsWith('S')){
-                var serviceObj=appStore.getters.getServiceByName(l.split(' ')[1])
-                handler.evalService(serviceObj,l)
+                handler.evalService(l)
             }
-            else if (l.startsWith('R')){
-                var relationshipObj=appStore.getters.getRelationshipByName(l.split(' ')[1])
-                handler.evalRelationship(relationshipObj,l)
-            }
+            // else if (l.startsWith('R')){
+            //     handler.evalRelationship(l)
+            // }
             // else if(l.startsWith('if')){
-                
             // }
             else{
                 console.log('app format invalid')
@@ -125,8 +168,9 @@ export default function executeTheApp(lines:string[]) {
         console.log('finishing running app from')
         return true;
     }
-    catch(Exception){
+    catch(e){
         console.log("aborting with exception")
+        console.log(e)
     }
 }
 

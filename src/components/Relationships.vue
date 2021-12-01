@@ -21,7 +21,7 @@
   <button class="open-button" v-on:click="openForm()">Add New</button>
 
   <div class="form-popup" id="myForm">
-    <form action="/action_page.php" class="form-container">
+    <div action="/action_page.php" class="form-container">
       <h4>Create a Relationship</h4>
 
       <label for="ServiceName">Service Name</label>
@@ -30,10 +30,11 @@
         placeholder="Select here"
         name="ServiceName"
         required
+        v-model="newRelationshipName"
       />
 
       <label for="ServiceType">Service Type</label>
-      <select name="ServiceType" id="ServiceType">
+      <select name="ServiceType" id="ServiceType" v-model="newRelationshipType">
         <option value="Control">Control</option>
         <option value="Drive">Drive</option>
         <option value="Support">Support</option>
@@ -41,36 +42,41 @@
       </select>
       <br /><br />
       <label for="ServiceType">Select Service 1</label>
-      <select name="ServiceType" id="ServiceType">
-        <option>Select Here</option>
-        <option v-for="input in inputs" :key="input.name">
-        {{ input.name }} </option>
+      <select name="ServiceType" id="Service1" v-model="service1Name">
+        <option disabled value="">Select Here</option>
+        <option v-for="output in outputs" :key="output.name">
+        {{ output.name }} </option>
       </select>
       <br /><br />
       <label for="ServiceType">Select Service 2</label>
-      <select name="ServiceType" id="ServiceType">
-        <option>Select Here</option>
-        <option v-for="output in outputs" :key="output.name">
-        {{ output.name}} </option>
+      <select name="ServiceType" id="Service2" v-model="service2Name">
+        <option disabled value="">Select Here</option>
+        <option v-for="input in inputs" :key="input.name">
+        {{ input.name}} </option>
       </select>
       <br /><br />
-      <button type="submit" class="btn">Add</button>
-      <button type="button" class="btn cancel" v-on:click="closeForm()">
+      <button class="btn" v-on:click="saveRelationship">Add</button>
+      <button class="btn cancel" v-on:click="closeForm">
         Cancel
       </button>
-    </form>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Relationship from "../classes/relationship";
+import Vue, { PropType, defineComponent } from "vue";
 import Service from "../classes/service";
 import { appStore } from "../store/store";
 
 
-export default {
+export default defineComponent({
   data() {
     return {
+      newRelationshipName: "",
+      newRelationshipType: "",
+      service1Name: "",
+      service2Name: "",
       items: appStore.getters.getRelationships as Array<Relationship>,
       inputs: appStore.getters.getServicebyInput as Array<Service>,
       outputs: appStore.getters.getServicebyOutput as Array<Service>,
@@ -93,8 +99,13 @@ export default {
     closeForm: function () {
       document.getElementById("myForm").style.display = "none";
     },
+    saveRelationship: function (){
+      let nRelationship = new Relationship(this.newRelationshipName,this.newRelationshipType,this.service1Name,this.service2Name);
+      appStore.commit('addRelationship',nRelationship);
+      this.closeForm();
+    },
   },
-};
+});
 </script>
 
 <style scoped>

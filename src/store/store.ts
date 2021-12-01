@@ -49,12 +49,18 @@ export const appStore = new Vuex.Store({
       }
     },
     getServicebyThing: (state) => (thingName) => {
-      const result = [] as Array<Service>;
-      for (const entry of state.services) {
-        if (entry.thingID === thingName) {
+      let result = [] as Array<Service>;
+      if(thingName == ""){
+        result = state.services
+      }
+      else{
+        for (const entry of state.services) {
+          if (entry.thingID === thingName) {
           result.push(entry);
+          }
         }
       }
+      
       return result;
     },
     getServicebyInput: (state) => {

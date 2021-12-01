@@ -11,22 +11,4 @@ export default class Relationship {
     this.serv2 = nServ2;
     this.picture = "";
   }
-  getName() {
-    return this.name;
-  }
-  getType() {
-    return this.type;
-  }
-  getFirstService() {
-    return this.serv1;
-  }
-  getSecondService() {
-    return this.serv2;
-  }
-  getPicture() {
-    return this.picture;
-  }
-  updatePicture(newPath: string) {
-    this.picture = newPath;
-  }
 }

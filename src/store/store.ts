@@ -1,6 +1,6 @@
 import Vuex from "vuex";
 import { createStore } from "vuex";
-import Vue from "vue";
+//import Vue from "vue";
 import Service from "../classes/service";
 import Thing from "../classes/thing";
 import Relationship from "../classes/relationship";
@@ -41,14 +41,14 @@ export const appStore = new Vuex.Store({
     getServices: (state) => {
       return state.services;
     },
-    getIpAddressfromThing: (state) => (thingName) => {
+    getIpAddressfromThing: (state) => (thingName:string) => {
       for(const entry of state.things){
         if(entry.name == thingName){
           return entry.ipAddress;
         }
       }
     },
-    getServicebyThing: (state) => (thingName) => {
+    getServicebyThing: (state) => (thingName:string) => {
       let result = [] as Array<Service>;
       if(thingName == ""){
         result = state.services
@@ -63,7 +63,7 @@ export const appStore = new Vuex.Store({
       
       return result;
     },
-    getServiceByName: (state) => (serviceName)=>{{
+    getServiceByName: (state) => (serviceName:string)=>{{
       for (const entry of state.services){
         if(entry.name==serviceName){
           return entry;

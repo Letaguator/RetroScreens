@@ -8,8 +8,8 @@ import Service from '../src/classes/service';
 import Relationship from '../src/classes/relationship';
 import { app } from 'electron';
 
-const connectionIP=''
-const connectionPort=''
+const connectionIP='192.168.0.227'
+const connectionPort='6668'
 
 class callHandler{
     ws;
@@ -33,10 +33,10 @@ class callHandler{
             this.ws.send(payload)
         }
         var data='';
-        this.ws.onMessage((ws, e) => { 
-            console.log('reply from Thing'+e.data) 
-            data=JSON.parse(e.data);
-        })
+        // this.ws.onMessage((ws, e) => { 
+        //     console.log('reply from Thing'+e.data) 
+        //     data=JSON.parse(e.data);
+        // })
         return data;
     }
 
@@ -45,7 +45,7 @@ class callHandler{
         var serviceA=appStore.getters.getServicebyName(relationshipObj.getFirstService())
         var serviceB=appStore.getters.getServicebyName(relationshipObj.getSecondService())
 
-        if (relationshipObj.type in ['control','drive']){
+        if (relationshipObj.type in ['drive']){
             var outputFromA=this.evalService(serviceA,line)
             this.evalService(serviceB,outputFromA)
         }
@@ -58,7 +58,7 @@ class callHandler{
     }
 }
 
-function parseApp(inputFilePath:string) {
+export function executeApp(inputFilePath:string) {
     try{
         var reader = rd.createInterface(fs.createReadStream(inputFilePath));
         var handler = new callHandler(connectionIP,connectionPort)
@@ -72,9 +72,9 @@ function parseApp(inputFilePath:string) {
                 var relationshipObj=appStore.getters.getRelationshipByName(l.split(' ')[1])
                 handler.evalRelationship(relationshipObj,l)
             }
-            else if(l.startsWith('if')){
+            // else if(l.startsWith('if')){
                 
-            }
+            // }
             else{
                 console.log('app format invalid')
                 return false;
@@ -82,6 +82,37 @@ function parseApp(inputFilePath:string) {
             console.log('finishing running app from '+inputFilePath)
             return true;
         })
+    }
+    catch(Exception){
+        console.log("aborting with exception")
+    }
+}
+
+export default function executeTheApp(lines:string[]) {
+    try{
+        //var reader = rd.createInterface(fs.createReadStream(inputFilePath));
+        var handler = new callHandler(connectionIP,connectionPort)
+        lines.forEach((l)=>{
+            l=l.toLowerCase()
+            if (l.startsWith('S')){
+                var serviceObj=appStore.getters.getServiceByName(l.split(' ')[1])
+                handler.evalService(serviceObj,l)
+            }
+            else if (l.startsWith('R')){
+                var relationshipObj=appStore.getters.getRelationshipByName(l.split(' ')[1])
+                handler.evalRelationship(relationshipObj,l)
+            }
+            // else if(l.startsWith('if')){
+                
+            // }
+            else{
+                console.log('app format invalid')
+                return false;
+            }
+
+        })    
+        console.log('finishing running app from')
+        return true;
     }
     catch(Exception){
         console.log("aborting with exception")

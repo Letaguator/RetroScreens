@@ -1,12 +1,12 @@
 export default class Thing {
   name: string;
   ipAddress: string;
-  socket: string;
+  port: string;
   picture: string;
-  constructor(nName: string, nAddress: string, nSocket: string) {
+  constructor(nName: string, nAddress: string, nPort: string) {
     this.name = nName;
     this.ipAddress = nAddress;
-    this.socket = nSocket;
+    this.port = nPort;
     this.picture = "";
   }
   getName() {
@@ -16,7 +16,7 @@ export default class Thing {
     return this.ipAddress;
   }
   getSocket() {
-    return this.socket;
+    return this.port;
   }
   getPicture() {
     return this.picture;

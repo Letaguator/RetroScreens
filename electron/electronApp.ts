@@ -4,8 +4,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from "path";
 import retrieveIoTData from "./multicastReader";
-import { loadAppsFromWorkDirectory, saveAppToWorkDirectory } from "./projectLoader";
-import executeTheApp from "./appExecuter";
+import { loadAppsFromWorkDirectory, saveAppToWorkDirectory, deleteAppFromWorkDirectory } from "./projectLoader";
+// import executeTheApp from "./appExecuter";
 
 function createWindow() {
   // Create the browser window.
@@ -42,7 +42,11 @@ ipcMain.on('load-apps', (event) => {
   event.returnValue = apps;
 });
 
-executeTheApp(['S DistanceSensor'])
+ipcMain.on('delete-app', (event, appName) => {
+  deleteAppFromWorkDirectory(appName);
+});
+
+// executeTheApp(['S DistanceSensor'])
 
 ipcMain.on('execute-apps', (event, appData) => {
   

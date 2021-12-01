@@ -6,8 +6,6 @@ import {appStore}  from "../src/store/store";
 
 import Service from '../src/classes/service';
 import Relationship from '../src/classes/relationship';
-import { app } from 'electron';
-import Thing from '../src/classes/thing';
 
 const connectionIP='192.168.0.227'
 const connectionPort='6668'

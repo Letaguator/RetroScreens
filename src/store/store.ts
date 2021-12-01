@@ -63,6 +63,13 @@ export const appStore = new Vuex.Store({
       
       return result;
     },
+    getServiceByName: (state) => (serviceName)=>{{
+      for (const entry of state.services){
+        if(entry.name==serviceName){
+          return entry;
+        }
+      }
+    }},
     getServicebyInput: (state) => {
       const result = [] as Array<Service>;
       for (const entry of state.services){

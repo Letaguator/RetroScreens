@@ -2,7 +2,6 @@
   <div>
     <ul id="listOfThings">
       <li v-for="item in items" :key="item.name">
-        {{ item.name }}
         <div class="card" v-on:click="expand($event)">
           <!-- <img src="" alt=""> -->
           <div class="container">
@@ -55,7 +54,7 @@
         {{ input.name}} </option>
       </select>
       <br /><br />
-      <button class="btn" v-on:click="saveRelationship">Add</button>
+      <input type="submit" class="btn" v-on:click="saveRelationship" value="Add">
       <button class="btn cancel" v-on:click="closeForm">
         Cancel
       </button>

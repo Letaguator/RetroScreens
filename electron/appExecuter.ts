@@ -7,6 +7,7 @@ import {appStore}  from "../src/store/store";
 import Service from '../src/classes/service';
 import Relationship from '../src/classes/relationship';
 import { app } from 'electron';
+import Thing from '../src/classes/thing';
 
 const connectionIP='192.168.0.227'
 const connectionPort='6668'
@@ -23,7 +24,16 @@ class callHandler{
 
     evalService(serviceObj:Service,line:string){
         if (!serviceObj.input)
-            this.ws.send(serviceObj.getName())
+        {
+            var objToSend = {
+                TweetType: 'Service',
+                ThingID: 'SeansPi',
+                SpaceID:'RetroScreens',
+                ServiceName: serviceObj.getName(),
+                ServiceInputs: ''
+            }
+            this.ws.send(JSON.stringify(objToSend))
+        }
         else{
             var inputs = line.split(' ')
             var payload=''
@@ -90,6 +100,7 @@ export function executeApp(inputFilePath:string) {
 
 export default function executeTheApp(lines:string[]) {
     try{
+        console.log("app started")
         //var reader = rd.createInterface(fs.createReadStream(inputFilePath));
         var handler = new callHandler(connectionIP,connectionPort)
         lines.forEach((l)=>{

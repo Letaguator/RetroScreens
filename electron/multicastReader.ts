@@ -64,7 +64,7 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
         var message = tweets[i];
         try{
             let obj = JSON.parse(message);
-            console.log(obj);
+            //console.log(obj);
             evt.reply("handle-iot-data", obj);
         }
         catch(e)

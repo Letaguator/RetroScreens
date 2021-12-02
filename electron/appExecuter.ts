@@ -12,8 +12,8 @@ export default function evalService(lines:string[]){
     let shouldExecute:boolean
     let lastVal:number 
     lines.forEach((line)=>{
-        var words= line.split('*')[0].split(' ')
-        var flags=line.split('*')[1].split('-')
+        var words = line.split('*')[0].split(' ')
+        var flags = line.split('*')[1].split('-')
         var objToSend = {
             TweetType: 'Service',
             ThingID: 'SeansPi',

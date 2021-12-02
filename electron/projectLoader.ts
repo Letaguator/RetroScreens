@@ -31,3 +31,6 @@ export function loadAppsFromWorkDirectory() {
 export function saveAppToWorkDirectory(appData: any) {
     fs.writeFileSync(appDir + path.sep + appData.name + ".viot", appData.src);
 }
+export function deleteAppFromWorkDirectory(appName: string) {
+    fs.rmSync(appDir + path.sep + appName + ".viot");
+}

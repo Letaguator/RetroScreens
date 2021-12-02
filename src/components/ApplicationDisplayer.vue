@@ -3,9 +3,11 @@
     <h3>
       {{ application.name }}
       <span v-if="application.saved === false">*</span>
+      <p v-if="application.state !== ''">{{application.state}}</p>
     </h3>
-    <button>&#9654;</button>
-    <button>&#9646; &#9646;</button>
+    <button v-on:click="executeApp">&#9654;</button>
+    <button v-on:click="deleteApp">Delete</button>
+    <!-- <button>&#9646; &#9646;</button> -->
   </div>
 </template>
 
@@ -13,6 +15,7 @@
 import Vue, { PropType, defineComponent } from "vue";
 import { appStore } from "../store/store";
 import App from "../classes/app";
+const { ipcRenderer } = window.require("electron");
 
 export default defineComponent({
   props: {
@@ -24,6 +27,14 @@ export default defineComponent({
   methods: {
     openApplication() {
       appStore.commit('setActiveApp', this.application);
+    },
+    executeApp() {
+      (ipcRenderer as any).send("execute-app", (this.application as App).flow);
+      (this.application as App).state = "Executing";
+    },
+    deleteApp() {
+      console.log((this.application as App).name);
+      (ipcRenderer as any).send("delete-app", (this.application as App).name);
     }
   }
 });

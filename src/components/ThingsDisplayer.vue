@@ -1,17 +1,17 @@
 <template>
   <div>
-    <h3>{{ service.name }}</h3>
-    <p>{{ service.thingID }}</p>
+    <h3>{{ thing.name }}</h3>
+    <p>{{ thing.ipAddress }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import Vue, { PropType, defineComponent } from "vue";
-import Service from "../classes/service";
+import Thing from "../classes/thing";
 export default defineComponent({
   props: {
-    service: {
-      type: Object as PropType<Service>,
+    thing: {
+      type: Object as PropType<Thing>,
       required: true,
     },
   },

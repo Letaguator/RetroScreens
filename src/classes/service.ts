@@ -11,23 +11,4 @@ export default class Service {
     this.input = inp;
     this.picture = "";
   }
-  getName() {
-    return this.name;
-  }
-  getThing() {
-    return this.thingID;
-  }
-  getType() {
-    if (this.output == true) {
-      return "output";
-    } else {
-      return "input";
-    }
-  }
-  getPicture() {
-    return this.picture;
-  }
-  updatePicture(newPath: string) {
-    this.picture = newPath;
-  }
 }

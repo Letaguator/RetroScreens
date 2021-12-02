@@ -77,7 +77,13 @@ export default defineComponent({
     {
       appStore.commit('addApp', new App(appData.name, appData.src, true));
     }
-
+    
+    let relationshipDatas = (ipcRenderer as any).sendSync("load-relationships");
+    for(const relationshipData of relationshipDatas)
+    {
+      appStore.commit('addRelationship', JSON.parse(relationshipData.jsonData) as Relationship);
+    }
+    
     (ipcRenderer as any).send("get-iot-data");
     setTimeout(() => {
       this.hasLoadedIoT = true;

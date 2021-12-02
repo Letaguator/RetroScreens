@@ -54,7 +54,7 @@ import Vue, { PropType, defineComponent } from "vue";
 import Service from "../classes/service";
 import { appStore } from "../store/store";
 import RelationshipDisplayer from "./RelationshipDisplayer.vue";
-
+const { ipcRenderer } = window.require("electron");
 
 export default defineComponent({
   components: {
@@ -88,8 +88,9 @@ export default defineComponent({
       document.getElementById("myForm").style.display = "none";
     },
     saveRelationship: function (){
-      let nRelationship = new Relationship(this.newRelationshipName,this.newRelationshipType,this.service1Name,this.service2Name);
+      let nRelationship = new Relationship(this.newRelationshipName, this.newRelationshipType, this.service1Name, this.service2Name);
       appStore.commit('addRelationship', nRelationship);
+      (ipcRenderer as any).send("save-relationship", { name: nRelationship.name, jsonData: JSON.stringify(nRelationship) });
       this.closeForm();
     },
   },

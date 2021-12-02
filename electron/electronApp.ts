@@ -6,7 +6,7 @@ import * as path from "path";
 import retrieveIoTData from "./multicastReader";
 import { loadAppsFromWorkDirectory, saveAppToWorkDirectory, deleteAppFromWorkDirectory, loadRelationships, saveRelationship } from "./projectLoader";
 import executeTheApp from "./appExecuter";
-import evalService from "./serviceExecuter";
+import runService from "./serviceExecuter";
 
 function createWindow() {
   // Create the browser window.
@@ -47,7 +47,7 @@ ipcMain.on('delete-app', (event, appName) => {
 });
 
 ipcMain.on('run-service', (event, evalInfo: any) => {
-  evalService(event, evalInfo);
+  event.returnValue = runService(event, evalInfo);
 });
 
 ipcMain.on('load-relationships', (event) => {

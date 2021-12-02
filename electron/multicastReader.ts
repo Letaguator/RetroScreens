@@ -1,4 +1,4 @@
-import { ipcMain, IpcMainEvent } from 'electron';
+import { IpcMainEvent } from 'electron';
 
 export default async function retrieveIoTData(evt: IpcMainEvent)
 {

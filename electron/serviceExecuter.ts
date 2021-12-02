@@ -1,7 +1,8 @@
+import { IpcMainEvent } from 'electron';
 const Net = require('net')
 
 // {ip, port, thingId, inputs, servicename, lines:string[]}
-export default function evalService(evt, evalInfo: any): any {
+export default function runService(evt: IpcMainEvent, evalInfo: any): any {
     var objToSend = {
         TweetType: 'Service',
         ThingID: evalInfo.thingId,

@@ -6,11 +6,10 @@ import Thing from "../classes/thing";
 import Relationship from "../classes/relationship";
 import App from "../classes/app";
 import store from ".";
-import LoadedApp from "@/classes/loadedApp";
 
 export const appStore = new Vuex.Store({
   state: {
-    activeApp: new LoadedApp() as LoadedApp,
+    activeApp: null as App,
     things: [] as Array<Thing>,
     services: [] as Array<Service>,
     relationships: [] as Array<Relationship>,
@@ -21,7 +20,7 @@ export const appStore = new Vuex.Store({
       var targetIndex = state.apps.indexOf(payload);
       if(targetIndex !== -1)
       {
-        state.activeApp.app = payload;
+        state.activeApp = payload;
       }
     },
     addThing(state, payload) {
@@ -41,9 +40,9 @@ export const appStore = new Vuex.Store({
       if(targetIndex !== -1)
       {
         state.apps.splice(targetIndex, 1);
-        if(payload === state.activeApp.app)
+        if(payload === state.activeApp)
         {
-          state.activeApp = new LoadedApp();
+          state.activeApp = null;
         }
       }
     },

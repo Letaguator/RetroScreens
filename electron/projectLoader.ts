@@ -32,5 +32,9 @@ export function saveAppToWorkDirectory(appData: any) {
     fs.writeFileSync(appDir + path.sep + appData.name + ".viot", appData.src);
 }
 export function deleteAppFromWorkDirectory(appName: string) {
-    fs.rmSync(appDir + path.sep + appName + ".viot");
+    const fileToDelete = appDir + path.sep + appName + ".viot";
+    if (fs.existsSync(fileToDelete))
+    {
+        fs.rmSync(fileToDelete);
+    }
 }

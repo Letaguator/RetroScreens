@@ -60,7 +60,7 @@ export default defineComponent({
           }
         }
         else if (item.startsWith('if S')){
-          newFlow.push(item+' *-c')
+          newFlow.push(item+' *-d')
           conditionalFlag=true
         }
         else if(item.startsWith('if R')){
@@ -68,7 +68,7 @@ export default defineComponent({
           serviceA = appStore.getters.getServiceByName(relationshipObj.serv1)
           serviceB = appStore.getters.getServiceByName(relationshipObj.serv2)
           newFlow.push('S '+serviceA.name+' *-o')
-          newFlow.push('S '+serviceB.name+' *-i')
+          newFlow.push('S '+serviceB.name+' *-i-d')
           conditionalFlag=true
         }
       });

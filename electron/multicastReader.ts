@@ -58,6 +58,10 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
         '{ "Tweet Type" : "Service","Name" : "DistanceSensor","Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "DistanceSensor:[NULL]:(detected,int, NULL)","Type" : "Report","AppCategory" : "Safety","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Service","Name" : "Buzzer", "Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Buzzer:[motionDetected,int, NULL]:(NULL)","Type" : "Action","AppCategory" : "Ambiance","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Relationship","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Name" : "MotionDetector","Owner" : "Sean","Category" : "Cooperative","Type" : "control","Description" : "","FS name" : "DistanceSensor","SS name" : "Buzzer" }',
+        '{ "Tweet Type" : "Identity_Thing","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Name" : "","Model" : "","Vendor" : "","Owner" : "Harsh","Description" : "","OS" : "Raspbian" }',
+        '{ "Tweet Type" : "Identity_Language","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "65.116.108.97","Port" : "6668" }',
+        '{ "Tweet Type" : "Identity_Entity","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Name" : "","ID" : "HarshPiBoard","Type" : "Connected","Owner" : "Harsh","Vendor" : "","Description" : "" }',
+        '{ "Tweet Type" : "Service","Name" : "Timer","Thing ID" : "HarshsPi","Entity ID" : "HarshPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Timer:[NULL]:(elapsed,int, NULL)","Type" : "Action","AppCategory" : "Personal Assistance","Description" : "","Keywords" : "" }'
     ];
     for(let i = 0; i < tweets.length; i++)
     {

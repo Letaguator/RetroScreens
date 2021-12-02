@@ -29,7 +29,51 @@ export default defineComponent({
       appStore.commit('setActiveApp', this.application);
     },
     executeApp() {
-      (ipcRenderer as any).send("execute-app", (this.application as App).flow);
+      let conditionalFlag:boolean=false;
+      let newFlow: Array<string>
+      var relationshipObj:any
+      var serviceA:any
+      var serviceB:any
+
+      (this.application as App).flow.forEach((item)=>{
+        if(item.startsWith('R')){
+          var words=item.split(' ')
+          relationshipObj = appStore.getters.getRelationshipByName(words[0])
+          serviceA = appStore.getters.getServiceByName(relationshipObj.serv1)
+          serviceB = appStore.getters.getServiceByName(relationshipObj.serv2)
+          if(conditionalFlag){
+            newFlow.push('S '+serviceA.name+' *-o-c')
+            newFlow.push('S '+serviceB.name+' *-i-c')
+            conditionalFlag=false
+          }
+          else{
+            newFlow.push('S '+serviceA.name+' *-o')
+            newFlow.push('S '+serviceB.name+' *-i')
+          } 
+        }
+        else if (item.startsWith('S')){
+          if(conditionalFlag){
+            newFlow.push(item+'*-c')
+            conditionalFlag=false
+          }
+          else{
+            newFlow.push(item)
+          }
+        }
+        else if (item.startsWith('if S')){
+          newFlow.push(item+' *-c')
+          conditionalFlag=true
+        }
+        else if(item.startsWith('if R')){
+          relationshipObj = appStore.getters.getRelationshipByName(words[0])
+          serviceA = appStore.getters.getServiceByName(relationshipObj.serv1)
+          serviceB = appStore.getters.getServiceByName(relationshipObj.serv2)
+          newFlow.push('S '+serviceA.name+' *-o')
+          newFlow.push('S '+serviceB.name+' *-i')
+          conditionalFlag=true
+        }
+      });
+      (ipcRenderer as any).send("execute-app",newFlow);
       (this.application as App).state = "Executing";
     },
     deleteApp() {

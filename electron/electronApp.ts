@@ -46,7 +46,11 @@ ipcMain.on('delete-app', (event, appName) => {
   deleteAppFromWorkDirectory(appName);
 });
 
-executeTheApp(['S DistanceSensor'])
+
+ipcMain.on('delete-app', (event, allCalls:string[]) => {
+    executeTheApp(allCalls)
+  //executeTheApp(['S DistanceSensor'])
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

@@ -1,26 +1,19 @@
 
-// import { Websocket } from 'websocket-ts';
-// import {WebsocketBuilder} from 'websocket-ts';
-// import {appStore}  from "../src/store/store";
-
-// import Service from './classes/service';
-// import Relationship from './classes/relationship';
-
 const Net = require('net')
 const connectionIP='192.168.0.227'
 const connectionPort='6668'
 
-class CallHandler{
-    ip:string;
-    portNumber:string;
 
-    constructor(ip:string,portNumber:string){
-        this.ip=ip;
-        this.portNumber=portNumber;
-    }
 
-    evalService(line:string){
-        var words=line.split(' ')
+export default function evalService(lines:string[]){
+    lines.forEach((line)=>{
+        console.log(line)
+    })
+    let shouldExecute:boolean
+    let lastVal:number 
+    lines.forEach((line)=>{
+        var words= line.split('*')[0].split(' ')
+        var flags=line.split('*')[1].split('-')
         var objToSend = {
             TweetType: 'Service',
             ThingID: 'SeansPi',
@@ -28,58 +21,107 @@ class CallHandler{
             ServiceName: words[1],
             ServiceInputs: '()'
         }
-        if (words.length>2)
-        {
+        if (words.length>2){
             objToSend.ServiceInputs='('+words.join(",").replace(words[0],'')+')'
         }
-        console.log(JSON.stringify(objToSend))
-        var client = new Net.Socket();
-        client.connect({port:this.portNumber,host:this.ip}, function(){
-            client.write("{\"Service Inputs\":\"()\",\"Tweet Type\":\"Service\",\"Thing ID\":\"SeansPi\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"DistanceSensor\"}");
-            //client.write(JSON.stringify(objToSend))
-        });
-        return true;
-    }
+        if (flags.includes('i')){
+            words.push(lastVal as unknown as string)
+            shouldExecute=true;
+        }
+        if(shouldExecute && flags.includes('c')){
+            lastVal = makeCall(objToSend)
+            if (flags.includes('d')){
+                shouldExecute=lastVal as unknown as boolean
+            }
+        }
+        else if(!shouldExecute && !flags.includes('c')){
+            shouldExecute=true
+        }
+    })
+    return true;
+}
 
-    evalRelationship(ine:string){
-        //get service names here
-        //this.evalService(l1)
-        //this.evalService(l2)
-    }
+function makeCall(objToSend:any){
+    console.log(JSON.stringify(objToSend))
+    var client = new Net.Socket();
+    var returnVal
+    client.connect({port:connectionPort,host:connectionIP}, function(){
+        //client.write("{\"Service Inputs\":\"()\",\"Tweet Type\":\"Service\",\"Thing ID\":\"SeansPi\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"DistanceSensor\"}");
+        var response = 'Hello World' //change to actual response
+        returnVal=response as unknown as number
+    });
+    return returnVal
 }
 
 
-export default function executeTheApp(lines:string[]) {
-    try{
-        console.log("app started")
-        //var reader = rd.createInterface(fs.createReadStream(inputFilePath));
-        var handler = new CallHandler(connectionIP,connectionPort)
-        lines.forEach((l)=>{
-            console.log(l)
-            if (l.startsWith('S')){
-                handler.evalService(l)
-            }
-            else if (l.startsWith('R')){
-                handler.evalRelationship(l)
-            }
-            else if(l.startsWith('if')){
-                handler.evalService(l)
-            }
-            else{
-                console.log('app format invalid')
-                return false;
-            }
+// export default function executeTheApp(lines:string[]) {
+//     try{
+//         console.log("app started")
+//         //var reader = rd.createInterface(fs.createReadStream(inputFilePath));
+//         var handler = new CallHandler(connectionIP,connectionPort)
+//         lines.forEach((l)=>{
+//             console.log(l)
+//             if (l.startsWith('S')){
+//                 handler.evalService(l)
+//             }
+//             else if (l.startsWith('R')){
+//                 handler.evalRelationship(l)
+//             }
+//             else if(l.startsWith('if')){
+//                 handler.evalService(l)
+//             }
+//             else{
+//                 console.log('app format invalid')
+//                 return false;
+//             }
 
-        })    
-        console.log('finishing running app from')
-        return true;
-    }
-    catch(e){
-        console.log("aborting with exception")
-        console.log(e)
-    }
-}
+//         })    
+//         console.log('finishing running app from')
+//         return true;
+//     }
+//     catch(e){
+//         console.log("aborting with exception")
+//         console.log(e)
+//     }
+// }
 
+// class CallHandler{
+//     ip:string;
+//     portNumber:string;
+
+//     constructor(ip:string,portNumber:string){
+//         this.ip=ip;
+//         this.portNumber=portNumber;
+//     }
+
+//     evalService(line:string){
+//         var words=line.split(' ')
+//         var objToSend = {
+//             TweetType: 'Service',
+//             ThingID: 'SeansPi',
+//             SpaceID:'RetroScreens',
+//             ServiceName: words[1],
+//             ServiceInputs: '()'
+//         }
+//         if (words.length>2)
+//         {
+//             objToSend.ServiceInputs='('+words.join(",").replace(words[0],'')+')'
+//         }
+//         console.log(JSON.stringify(objToSend))
+//         var client = new Net.Socket();
+//         client.connect({port:this.portNumber,host:this.ip}, function(){
+//             client.write("{\"Service Inputs\":\"()\",\"Tweet Type\":\"Service\",\"Thing ID\":\"SeansPi\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"DistanceSensor\"}");
+//             //client.write(JSON.stringify(objToSend))
+//         });
+//         return true;
+//     }
+
+//     evalRelationship(ine:string){
+//         //get service names here
+//         //this.evalService(l1)
+//         //this.evalService(l2)
+//     }
+// }
 
 // evalService(serviceObj:Service,line:string){
     //     if (!serviceObj.input)

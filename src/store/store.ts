@@ -14,6 +14,7 @@ export const appStore = new Vuex.Store({
     services: [] as Array<Service>,
     relationships: [] as Array<Relationship>,
     apps: [] as Array<App>,
+    consoleLines: [] as Array<string>,
   },
   mutations: {
     setActiveApp(state, payload: App) {
@@ -22,6 +23,9 @@ export const appStore = new Vuex.Store({
       {
         state.activeApp = payload;
       }
+    },
+    writeToConsole(state, payload: any) {
+      state.consoleLines.push("<" + payload.appName + ">" + payload.message);
     },
     addThing(state, payload) {
       state.things.push(payload);
@@ -51,6 +55,9 @@ export const appStore = new Vuex.Store({
     getActiveApp(state) {
       return state.activeApp;
     },
+    getConsoleLines: (state) => {
+      return state.consoleLines;
+    },
     getThings: (state) => {
       return state.things;
     },
@@ -63,6 +70,15 @@ export const appStore = new Vuex.Store({
           return entry.ipAddress;
         }
       }
+    },
+    getThingByName: (state) => (thingName: string) => {
+      for(const entry of state.things){
+        if(entry.name == thingName){
+          return entry;
+        }
+      }
+
+      return null;
     },
     getServicebyThing: (state) => (thingName:string) => {
       let result = [] as Array<Service>;
@@ -79,13 +95,13 @@ export const appStore = new Vuex.Store({
       
       return result;
     },
-    getServiceByName: (state) => (serviceName:string)=>{{
+    getServiceByName: (state) => (serviceName:string)=>{
       for (const entry of state.services){
         if(entry.name==serviceName){
           return entry;
         }
       }
-    }},
+    },
     getServicebyInput: (state) => {
       const result = [] as Array<Service>;
       for (const entry of state.services){
@@ -106,6 +122,15 @@ export const appStore = new Vuex.Store({
     },
     getRelationships: (state) => {
       return state.relationships;
+    },
+    getRelationshipByName: (state) => (relationshipName: string)=>{
+      for (const entry of state.relationships){
+        if(entry.name == relationshipName){
+          return entry;
+        }
+      }
+
+      return null;
     },
     getApps: (state) => {
       return state.apps;

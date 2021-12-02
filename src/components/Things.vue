@@ -9,6 +9,7 @@ import Vue, { PropType, defineComponent } from "vue";
 import { appStore } from "../store/store";
 import Thing from "../classes/thing";
 import ThingDisplayer from "./ThingsDisplayer.vue";
+
 export default defineComponent({
   components: {
     ThingDisplayer

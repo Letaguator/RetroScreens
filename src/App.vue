@@ -9,7 +9,7 @@
 <script lang="ts">
 import Vue, { PropType, defineComponent } from "vue";
 import IoTLoader from "./components/IoTLoader.vue";
-import LogWindow from "./components/LogWindow.vue";
+import LogWindow from "./components/Console.vue";
 import LeftTab from "./components/LeftTab.vue";
 import Editor from "./components/Editor.vue";
 import Panel from "./components/Panel.vue";
@@ -20,20 +20,13 @@ import Service from "./classes/service";
 import Relationship from "./classes/relationship";
 import App from "./classes/app";
 
-//import executeTheApp from "../electron/appExecuter";
-
 const { ipcRenderer } = window.require("electron");
-
-console.log('Starting app')
-//executeTheApp(['S DistanceSensor'])
-console.log('Closing app')
 
 export default defineComponent({
   components: {
     IoTLoader,
     LeftTab,
     Editor
-    // LogWindow,
   },
   mounted() {
     (ipcRenderer as any).on(

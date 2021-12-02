@@ -6,6 +6,7 @@ import * as path from "path";
 import retrieveIoTData from "./multicastReader";
 import { loadAppsFromWorkDirectory, saveAppToWorkDirectory, deleteAppFromWorkDirectory, loadRelationships, saveRelationship } from "./projectLoader";
 import executeTheApp from "./appExecuter";
+import evalService from "./serviceExecuter";
 
 function createWindow() {
   // Create the browser window.
@@ -45,8 +46,8 @@ ipcMain.on('delete-app', (event, appName) => {
   deleteAppFromWorkDirectory(appName);
 });
 
-ipcMain.on('delete-app', (event, allCalls:string[]) => {
-    executeTheApp(allCalls)
+ipcMain.on('run-service', (event, evalInfo: any) => {
+  event.returnValue = evalService(evalInfo);
 });
 
 ipcMain.on('load-relationships', (event) => {
@@ -56,8 +57,6 @@ ipcMain.on('load-relationships', (event) => {
 ipcMain.on('save-relationship', (event, saveObj) => {
   saveRelationship(saveObj);
 });
-
-executeTheApp(['S DistanceSensor'])
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

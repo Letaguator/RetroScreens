@@ -49,11 +49,11 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
 
     var tweets = [
         '{ "Tweet Type" : "Identity_Thing","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Name" : "","Model" : "","Vendor" : "","Owner" : "Mathias","Description" : "","OS" : "Raspbian" }',
-        '{ "Tweet Type" : "Identity_Language","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "65.116.108.97","Port" : "6668" }',
+        '{ "Tweet Type" : "Identity_Language","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "192.168.0.217","Port" : "6668" }',
         '{ "Tweet Type" : "Identity_Entity","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Name" : "","ID" : "MathiasPiBoard","Type" : "","Owner" : "Mathias","Vendor" : "","Description" : "" }',
         '{ "Tweet Type" : "Service","Name" : "Dice","Thing ID" : "MathiasPi","Entity ID" : "MathiasPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Dice:[NULL]:(diceValue,int, NULL)","Type" : "Action","AppCategory" : "Ambiance","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Identity_Thing","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Name" : "Sean\'s Pi","Model" : "","Vendor" : "","Owner" : "Sean","Description" : "","OS" : "Raspbian" }',
-        '{ "Tweet Type" : "Identity_Language","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Network Name" : "TP-Link_C50E","Communication Language" : "","IP" : "65.116.108.97","Port" : "6668" }',
+        '{ "Tweet Type" : "Identity_Language","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Network Name" : "TP-Link_C50E","Communication Language" : "","IP" : "192.168.0.227","Port" : "6668" }',
         '{ "Tweet Type" : "Identity_Entity","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Name" : "","ID" : "SeansPiBoard","Type" : "","Owner" : "Sean","Vendor" : "","Description" : "" }',
         '{ "Tweet Type" : "Service","Name" : "DistanceSensor","Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "DistanceSensor:[NULL]:(detected,int, NULL)","Type" : "Report","AppCategory" : "Safety","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Service","Name" : "Buzzer", "Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Buzzer:[motionDetected,int, NULL]:(NULL)","Type" : "Action","AppCategory" : "Ambiance","Description" : "","Keywords" : "" }',

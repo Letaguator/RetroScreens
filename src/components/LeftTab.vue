@@ -50,6 +50,7 @@ import Things from "./Things.vue";
 import Services from "./Services.vue";
 import Relationships from "./Relationships.vue";
 import Applications from "./Applications.vue";
+import Console from "./Console.vue";
 
 
 export default defineComponent({
@@ -58,6 +59,7 @@ export default defineComponent({
         Services,
         Relationships,
         Applications,
+        Console
     },
     methods: {
         reveal: function (evt, tabName) {

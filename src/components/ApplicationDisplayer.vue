@@ -14,6 +14,9 @@
 import Vue, { PropType, defineComponent } from "vue";
 import { appStore } from "../store/store";
 import App from "../classes/app";
+import Service from "../classes/service";
+import Thing from "../classes/thing";
+import Relationship from "@/classes/relationship";
 const { ipcRenderer } = window.require("electron");
 
 export default defineComponent({
@@ -27,53 +30,121 @@ export default defineComponent({
     openApplication() {
       appStore.commit('setActiveApp', this.application);
     },
-    executeApp() {
-      let conditionalFlag:boolean=false;
-      let newFlow: Array<string>
-      var relationshipObj:any
-      var serviceA:any
-      var serviceB:any
+    async executeApp() {
+      const internalAppCall = async () => {
+        (this.application as App).state = "Executing";
+        for (let i = 0; i < (this.application as App).flow.length; i++) {
+          let cmd = (this.application as App).flow[i];
 
-      (this.application as App).flow.forEach((item)=>{
-        if(item.startsWith('R')){
-          var words=item.split(' ')
-          relationshipObj = appStore.getters.getRelationshipByName(words[0])
-          serviceA = appStore.getters.getServiceByName(relationshipObj.serv1)
-          serviceB = appStore.getters.getServiceByName(relationshipObj.serv2)
-          if(conditionalFlag){
-            newFlow.push('S '+serviceA.name+' *-o-c')
-            newFlow.push('S '+serviceB.name+' *-i-c')
-            conditionalFlag=false
-          }
-          else{
-            newFlow.push('S '+serviceA.name+' *-o')
-            newFlow.push('S '+serviceB.name+' *-i')
-          } 
+          if((this.application as App).state === "Failed Executing")
+            break;
+
+          console.log(cmd)
+
+          this.generalEval(cmd);
         }
-        else if (item.startsWith('S')){
-          if(conditionalFlag){
-            newFlow.push(item+'*-c')
-            conditionalFlag=false
-          }
-          else{
-            newFlow.push(item)
-          }
-        }
-        else if (item.startsWith('if S')){
-          newFlow.push(item.replace('if','')+' *-d')
-          conditionalFlag=true
-        }
-        else if(item.startsWith('if R')){
-          relationshipObj = appStore.getters.getRelationshipByName(words[0])
-          serviceA = appStore.getters.getServiceByName(relationshipObj.serv1)
-          serviceB = appStore.getters.getServiceByName(relationshipObj.serv2)
-          newFlow.push('S '+serviceA.name+' *-o')
-          newFlow.push('S '+serviceB.name+' *-i-d')
-          conditionalFlag=true
-        }
+      }
+      internalAppCall();
+    },
+    generalEval(cmd) {
+      const cmdType = cmd.split(" ")[0];
+      console.log(cmdType)
+      if(cmdType === "if")
+      {
+        return this.evalCond(cmd);
+      }
+      else if(cmdType === "r")
+      {
+        return this.evalRelationship(cmd);
+      }
+      else if(cmdType === "s")
+      {
+        return this.evalService(cmd);
+      }
+      else 
+      {
+        (this.application as App).state = "Failed Executing";
+      }
+    },
+    evalService(cmd): Number {
+      const segmentedCommand = cmd.split(" ");
+      const serviceName = segmentedCommand[1];
+      const service: Service = appStore.getters.getServiceByName(serviceName);
+      const thing: Thing = appStore.getters.getThingByName(service.thingID);
+      let inputs = "";
+
+      if(segmentedCommand.length === 3)
+      {
+        inputs = segmentedCommand[2];
+      }
+
+      const invokeResult = (ipcRenderer as any).send("run-service", {
+        serviceName: serviceName,
+        inputs: inputs,
+        thingId: thing.name,
+        ip: thing.ipAddress,
+        port: thing.port
       });
-      (ipcRenderer as any).send("execute-app",newFlow);
-      (this.application as App).state = "Executing";
+      const handledInvokeResult = invokeResult instanceof Number ? invokeResult as Number : 0;
+
+      appStore.commit("writeToConsole", { appName: (this.application as App).name, payload: " service named " + service.name + " yielded " + handledInvokeResult })
+
+      return handledInvokeResult;
+    },
+    evalRelationship(cmd) {
+      const segmentedCommand = cmd.split(" ");
+      const relationshipName = segmentedCommand[1];
+      const relationship: Relationship = appStore.getters.getRelationshipByName(relationshipName);
+
+      if(relationship.type == "control")
+      {
+        const controlResult = this.evalService("s " + relationship.serv1);
+        if(controlResult > 0)
+        {
+          this.evalService("s " + relationship.serv2 + " " + driverResult);
+          appStore.commit("writeToConsole", { appName: (this.application as App).name, payload: " control rel yielded yes on running service 2" })
+        }
+        else
+        {
+          appStore.commit("writeToConsole", { appName: (this.application as App).name, payload: " control rel yielded no on running service 2" })
+        }
+      }
+      else if(relationship.type == "drive")
+      {
+        var driverResult = this.evalService("s " + relationship.serv1);
+        this.evalService("s " + relationship.serv2 + " " + driverResult);
+        appStore.commit("writeToConsole", { appName: (this.application as App).name, payload: " driver rel yielded a call with " + driverResult })
+      }
+      else if(relationship.type == "support")
+      {
+        const resA = this.evalService("s " + relationship.serv1);
+        const resB = this.evalService("s " + relationship.serv2);
+        appStore.commit("writeToConsole", { appName: (this.application as App).name, payload: " support rel yielded: " + resA + " & " + resB })
+      }
+      else if(relationship.type == "contest")
+      {
+        const serviceChooser = Math.round(Math.random());
+        if(serviceChooser === 1)
+        {
+          appStore.commit("writeToConsole", { appName: (this.application as App).name, payload: " contest rel yielded " + relationship.serv1 })
+          this.evalService("s " + relationship.serv1);
+        }
+        else
+        {
+          appStore.commit("writeToConsole", { appName: (this.application as App).name, payload: " contest rel yielded " + relationship.serv2 })
+          this.evalService("s " + relationship.serv2);
+        }
+      }
+    },
+    evalCond(cmd) {
+      const cmdParts = cmd.split(" then ");
+      const firstEval = cmdParts[0].split(" ", 2);
+      const secondEval = cmdParts[1].split(" ", 2);
+
+      if(this.generalEval(firstEval))
+      {
+        this.generalEval(secondEval)
+      }
     },
     deleteApp() {
       (ipcRenderer as any).send("delete-app", (this.application as App).name);

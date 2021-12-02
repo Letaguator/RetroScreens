@@ -28,7 +28,7 @@ export default defineComponent({
         async saveApplication() {
             (ipcRenderer as any).send("save-app", { name: this.application.name, src: this.application.src });
 
-            this.application.flow = this.application.src.split("/n");
+            this.application.flow = this.application.src.split("\n");
             this.application.saved = true;
         },
         markDirty() {

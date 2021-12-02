@@ -5,6 +5,7 @@ import Service from "../classes/service";
 import Thing from "../classes/thing";
 import Relationship from "../classes/relationship";
 import App from "../classes/app";
+import store from ".";
 
 export const appStore = new Vuex.Store({
   state: {
@@ -15,8 +16,12 @@ export const appStore = new Vuex.Store({
     apps: [] as Array<App>,
   },
   mutations: {
-    setActiveApp(state, payload) {
-      state.activeApp = payload;
+    setActiveApp(state, payload: App) {
+      var targetIndex = state.apps.indexOf(payload);
+      if(targetIndex !== -1)
+      {
+        state.activeApp = payload;
+      }
     },
     addThing(state, payload) {
       state.things.push(payload);
@@ -27,8 +32,19 @@ export const appStore = new Vuex.Store({
     addRelationship(state, payload) {
       state.relationships.push(payload);
     },
-    addApp(state, payload) {
+    addApp(state, payload: App) {
       state.apps.push(payload);
+    },
+    removeApp(state, payload: App) {
+      var targetIndex = state.apps.indexOf(payload);
+      if(targetIndex !== -1)
+      {
+        state.apps.splice(targetIndex, 1);
+        if(payload === state.activeApp)
+        {
+          state.activeApp = null;
+        }
+      }
     },
   },
   getters: {
@@ -56,7 +72,7 @@ export const appStore = new Vuex.Store({
       else{
         for (const entry of state.services) {
           if (entry.thingID === thingName) {
-          result.push(entry);
+            result.push(entry);
           }
         }
       }

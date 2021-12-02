@@ -21,7 +21,7 @@ export default function runService(evt: IpcMainEvent, evalInfo: any): any {
     let result = null;
 
     client.on("data", (data: any) => {
-        console.log(data)
+        console.log(JSON.parse(data.toString()))
         const result = JSON.parse(data.toString()).serviceResult;
         evt.reply("retrieve-service-result", { appName: evalInfo.appName, result: result });
 

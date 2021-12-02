@@ -9,10 +9,10 @@
     <div class="form-container">
       <h4>Create a Relationship</h4>
 
-      <label for="RelationshipName">Relationship Name</label>
+      <!-- <label for="RelationshipName">Relationship Name</label> -->
       <input
         type="text"
-        placeholder="esg"
+        placeholder="Relationship name"
         name="RelationshipName"
         required
         v-model="newRelationshipName"

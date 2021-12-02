@@ -39,8 +39,6 @@ export default defineComponent({
           if((this.application as App).state === "Failed Executing")
             break;
 
-          console.log(cmd)
-
           this.generalEval(cmd);
         }
       }
@@ -48,7 +46,7 @@ export default defineComponent({
     },
     generalEval(cmd) {
       const cmdType = cmd.split(" ")[0];
-      console.log(cmdType)
+      
       if(cmdType === "if")
       {
         return this.evalCond(cmd);

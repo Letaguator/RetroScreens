@@ -32,7 +32,3 @@ export default function runService(evt: IpcMainEvent, evalInfo: any): any {
         console.log("Connection ended")
     });
 }
-
-function sleep(millis: any) {
-    return new Promise(resolve => setTimeout(resolve, millis));
-}

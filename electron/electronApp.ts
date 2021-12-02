@@ -13,7 +13,7 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     title: "Visual IoT",
     width: 1200,
-    height: 800,
+    height: 700,
     autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: false,
@@ -25,8 +25,7 @@ function createWindow() {
   // and load the index.html of the app.
   // mainWindow.loadFile("http://localhost:8080");
   mainWindow.loadFile('./dist/index.html');
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 }
 
 ipcMain.on('get-iot-data', (event) => {

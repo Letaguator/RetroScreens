@@ -49,7 +49,7 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
 
     var tweets = [
         '{ "Tweet Type" : "Identity_Thing","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Name" : "","Model" : "","Vendor" : "","Owner" : "Mathias","Description" : "","OS" : "Raspbian" }',
-        '{ "Tweet Type" : "Identity_Language","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "192.168.0.217","Port" : "6668" }',
+        '{ "Tweet Type" : "Identity_Language","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Network Name" : "Link_C50E","Communication Language" : "Sockets","IP" : "192.168.0.217","Port" : "6668" }',
         '{ "Tweet Type" : "Identity_Entity","Thing ID" : "MathiasPi","Space ID" : "RetroScreens","Name" : "","ID" : "MathiasPiBoard","Type" : "","Owner" : "Mathias","Vendor" : "","Description" : "" }',
         '{ "Tweet Type" : "Service","Name" : "Dice","Thing ID" : "MathiasPi","Entity ID" : "MathiasPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Dice:[NULL]:(diceValue,int, NULL)","Type" : "Action","AppCategory" : "Ambiance","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Identity_Thing","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Name" : "Sean\'s Pi","Model" : "","Vendor" : "","Owner" : "Sean","Description" : "","OS" : "Raspbian" }',
@@ -59,11 +59,11 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
         '{ "Tweet Type" : "Service","Name" : "Buzzer", "Thing ID" : "SeansPi","Entity ID" : "SeansPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Buzzer:[motionDetected,int, NULL]:(NULL)","Type" : "Action","AppCategory" : "Ambiance","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Relationship","Thing ID" : "SeansPi","Space ID" : "RetroScreens","Name" : "MotionDetector","Owner" : "Sean","Category" : "Cooperative","Type" : "control","Description" : "","FS name" : "DistanceSensor","SS name" : "Buzzer" }',
         '{ "Tweet Type" : "Identity_Thing","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Name" : "","Model" : "","Vendor" : "","Owner" : "Harsh","Description" : "","OS" : "Raspbian" }',
-        '{ "Tweet Type" : "Identity_Language","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "65.116.108.97","Port" : "6668" }',
+        '{ "Tweet Type" : "Identity_Language","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Network Name" : "Link_C50E","Communication Language" : "Sockets","IP" : "192.168.0.147","Port" : "6668" }',
         '{ "Tweet Type" : "Identity_Entity","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Name" : "","ID" : "HarshPiBoard","Type" : "Connected","Owner" : "Harsh","Vendor" : "","Description" : "" }',
         '{ "Tweet Type" : "Service","Name" : "Timer","Thing ID" : "HarshsPi","Entity ID" : "HarshPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Timer:[NULL]:(elapsed,int, NULL)","Type" : "Action","AppCategory" : "Personal Assistance","Description" : "","Keywords" : "" }',
         '{ "Tweet Type" : "Identity_Thing","Thing ID" : "MichelesPi","Space ID" : "RetroScreens","Name" : "","Model" : "","Vendor" : "","Owner" : "Michele","Description" : "","OS" : "Raspbian" }',
-        '{ "Tweet Type" : "Identity_Language","Thing ID" : "MichelesPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "65.116.108.97","Port" : "6668" }',
+        '{ "Tweet Type" : "Identity_Language","Thing ID" : "MichelesPi","Space ID" : "RetroScreens","Network Name" : "Link_C50E","Communication Language" : "Sockets","IP" : "192.168.0.109","Port" : "6668" }',
         '{ "Tweet Type" : "Identity_Entity","Thing ID" : "MichelesPi","Space ID" : "RetroScreens","Name" : "","ID" : "MichelesPiBoard","Type" : "Connected","Owner" : "Michele","Vendor" : "","Description" : "" }',
         '{ "Tweet Type" : "Service","Name" : "AlarmClock","Thing ID" : "MichelesPi","Entity ID" : "MichelesPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "AlarmClock:[time,int, NULL]:(NULL)","Type" : "Action","AppCategory" : "Automation","Description" : "","Keywords" : "" }'
     ];

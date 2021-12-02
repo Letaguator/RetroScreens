@@ -7,7 +7,6 @@
     </h3>
     <button v-on:click="executeApp">&#9654;</button>
     <button v-on:click="deleteApp">Delete</button>
-    <!-- <button>&#9646; &#9646;</button> -->
   </div>
 </template>
 

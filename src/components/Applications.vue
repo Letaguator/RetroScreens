@@ -3,6 +3,10 @@
     <input type="text" placeholder="Application Name" v-model="newAppName" />
     <button v-on:click="createApplication">Create Application</button>
   </div>
+  <div>
+    <input type="file" accept=".viot" @change="onFileSelect" />
+    <button v-on:click="loadApp">Load App From File</button>
+  </div>
   <div id="appList">
     <ApplicationDisplayer v-for="application in applications" v-bind:key="application.name" v-bind:application="application"/>
   </div>
@@ -45,6 +49,26 @@ export default defineComponent({
       else{
         alert("App name must be between 2 and 16 chars");
       }
+    },
+    onFileSelect(evt) {
+      const files = evt.target.files;
+      const targetFile = files[0];
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        const src = fileReader.result as string;
+        this.uploadApp = new App(targetFile.name, src, false);
+        console.log(this.uploadApp.name)
+        console.log(this.uploadApp.src)
+      });
+      fileReader.readAsText(targetFile);
+    },
+    loadApp()
+    {
+      if(this.uploadApp != null)
+      {
+        appStore.commit("addApp", this.uploadApp);
+        this.uploadApp = null;
+      }
     }
   },
   computed: {
@@ -54,7 +78,8 @@ export default defineComponent({
   },
   data() {
     return {
-      newAppName: ""
+      newAppName: "",
+      uploadApp: null as App
     };
   }
 });

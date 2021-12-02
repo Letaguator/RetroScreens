@@ -1,8 +1,7 @@
-
 const Net = require('net')
 
 // {ip, port, thingId, inputs, servicename, lines:string[]}
-export default function evalService(evalInfo: any): any {
+export default function evalService(evt, evalInfo: any): any {
     var objToSend = {
         TweetType: 'Service',
         ThingID: evalInfo.thingId,
@@ -16,26 +15,21 @@ export default function evalService(evalInfo: any): any {
         var jsonToSend = "{\"Service Inputs\":\"(" + evalInfo.inputs + ")\",\"Tweet Type\":\"Service\",\"Thing ID\":\"" + evalInfo.thingId + "\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"" + evalInfo.serviceName + "\"}";
         console.log(jsonToSend);
         client.write(jsonToSend);
-        var response = 'Hello World'; //change to actual response
     });
 
     let result = null;
 
     client.on("data", (data: any) => {
-        result = JSON.parse(data.toString()).serviceResult;
+        console.log(data)
+        const result = JSON.parse(data.toString()).serviceResult;
+        evt.reply("retrieve-service-result", { appName: evalInfo.appName, result: result });
+
         client.end();
     });
 
     client.on("end", () => {
         console.log("Connection ended")
     });
-
-    while(result === null)
-    {
-        sleep(25);
-    }
-
-    return result;
 }
 
 function sleep(millis: any) {

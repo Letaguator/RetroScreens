@@ -60,7 +60,7 @@ export default defineComponent({
           }
         }
         else if (item.startsWith('if S')){
-          newFlow.push(item+' *-d')
+          newFlow.push(item.replace('if','')+' *-d')
           conditionalFlag=true
         }
         else if(item.startsWith('if R')){

@@ -5,7 +5,7 @@
       <span v-if="application.saved === false">*</span>
       <p v-if="application.state !== ''">{{application.state}}</p>
     </h3>
-    <button v-on:click="executeApp">&#9654;</button>
+    <button v-if="application.flow.length > 0" v-on:click="executeApp">&#9654;</button>
     <button v-on:click="deleteApp">Delete</button>
   </div>
 </template>
@@ -32,8 +32,8 @@ export default defineComponent({
       (this.application as App).state = "Executing";
     },
     deleteApp() {
-      console.log((this.application as App).name);
       (ipcRenderer as any).send("delete-app", (this.application as App).name);
+      appStore.commit('removeApp', this.application);
     }
   }
 });

@@ -4,8 +4,11 @@
     <button v-on:click="createApplication">Create Application</button>
   </div>
   <div>
-    <input type="file" accept=".viot" @change="onFileSelect" />
-    <button v-on:click="loadApp">Load App From File</button>
+    <p>Import a .viot file from disk</p>
+    <div id="uploadInteractorsDiv">
+      <input type="file" accept=".viot" @change="onFileSelect" />
+      <button v-on:click="loadApp">Upload App</button>
+    </div>
   </div>
   <div id="appList">
     <ApplicationDisplayer v-for="application in applications" v-bind:key="application.name" v-bind:application="application"/>
@@ -56,9 +59,7 @@ export default defineComponent({
       const fileReader = new FileReader();
       fileReader.addEventListener("load", () => {
         const src = fileReader.result as string;
-        this.uploadApp = new App(targetFile.name, src, false);
-        console.log(this.uploadApp.name)
-        console.log(this.uploadApp.src)
+        this.uploadApp = new App(targetFile.name.split(".")[0], src, false);
       });
       fileReader.readAsText(targetFile);
     },
@@ -66,8 +67,23 @@ export default defineComponent({
     {
       if(this.uploadApp != null)
       {
-        appStore.commit("addApp", this.uploadApp);
-        this.uploadApp = null;
+        let duplicateName = false;
+        for(let application of this.applications)
+        {
+          if(application.name === this.uploadApp.name)
+          {
+            duplicateName = true;
+          }
+        }
+        
+        if(duplicateName)
+        {
+          alert("App with the name '" + this.uploadApp.name + "' already exists");
+        }
+        else
+        {
+          appStore.commit("addApp", this.uploadApp);
+        }
       }
     }
   },
@@ -99,5 +115,15 @@ export default defineComponent({
   input, button
   {
     height: 32px;
+  }
+
+  p, input {
+    color: white;
+    background-color: #323C52;
+  }
+
+  #uploadInteractorsDiv {
+    display: flex;
+    flex-direction: row;
   }
 </style>

@@ -18,11 +18,13 @@
 import Vue, { PropType, defineComponent } from "vue";
 import { appStore } from "../store/store";
 import App from "../classes/app";
+import LoadedApp from "../classes/loadedApp";
 const { ipcRenderer } = window.require("electron");
 
 export default defineComponent({
     computed: {
-        application(): App { return appStore.getters.getActiveApp }
+        loadedApplication(): LoadedApp { return appStore.getters.getActiveApp },
+        application(): App { return this.loadedApplication.app }
     },
     methods: {
         async saveApplication() {

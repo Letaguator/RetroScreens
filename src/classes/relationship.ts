@@ -4,6 +4,7 @@ export default class Relationship {
   serv1: string;
   serv2: string;
   picture: string;
+  
   constructor(nName: string, nType: string, nServ1: string, nServ2: string) {
     this.name = nName;
     this.type = nType;

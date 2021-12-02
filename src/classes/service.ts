@@ -4,6 +4,7 @@ export default class Service {
   output: boolean;
   input: boolean;
   picture: string;
+  
   constructor(nName: string, nID: string, out: boolean, inp: boolean) {
     this.name = nName;
     this.thingID = nID;

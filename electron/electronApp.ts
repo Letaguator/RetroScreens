@@ -5,7 +5,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from "path";
 import retrieveIoTData from "./multicastReader";
 import { loadAppsFromWorkDirectory, saveAppToWorkDirectory, deleteAppFromWorkDirectory } from "./projectLoader";
-// import executeTheApp from "./appExecuter";
+import executeTheApp from "./appExecuter";
 
 function createWindow() {
   // Create the browser window.
@@ -46,11 +46,7 @@ ipcMain.on('delete-app', (event, appName) => {
   deleteAppFromWorkDirectory(appName);
 });
 
-// executeTheApp(['S DistanceSensor'])
-
-ipcMain.on('execute-apps', (event, appData) => {
-  
-});
+executeTheApp(['S DistanceSensor'])
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

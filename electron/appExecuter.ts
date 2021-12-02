@@ -6,20 +6,83 @@
 // import Service from './classes/service';
 // import Relationship from './classes/relationship';
 
-const WebSocket = require('ws');
-
+const Net = require('net')
 const connectionIP='192.168.0.227'
 const connectionPort='6668'
 
-class callHandler{
+class CallHandler{
     ip:string;
     portNumber:string;
+
     constructor(ip:string,portNumber:string){
         this.ip=ip;
         this.portNumber=portNumber;
     }
 
-    // evalService(serviceObj:Service,line:string){
+    evalService(line:string){
+        var words=line.split(' ')
+        var objToSend = {
+            TweetType: 'Service',
+            ThingID: 'SeansPi',
+            SpaceID:'RetroScreens',
+            ServiceName: words[1],
+            ServiceInputs: '()'
+        }
+        if (words.length>2)
+        {
+            objToSend.ServiceInputs='('+words.join(",").replace(words[0],'')+')'
+        }
+        console.log(JSON.stringify(objToSend))
+        var client = new Net.Socket();
+        client.connect({port:this.portNumber,host:this.ip}, function(){
+            client.write("{\"Service Inputs\":\"()\",\"Tweet Type\":\"Service\",\"Thing ID\":\"SeansPi\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"DistanceSensor\"}");
+            //this.client.write(JSON.stringify(objToSend))
+        });
+        return true;
+    }
+
+    evalRelationship(ine:string){
+        //get service names here
+
+        //this.evalService(l1)
+        //this.evalService(l2)
+    }
+}
+
+
+export default function executeTheApp(lines:string[]) {
+    try{
+        console.log("app started")
+        //var reader = rd.createInterface(fs.createReadStream(inputFilePath));
+        var handler = new CallHandler(connectionIP,connectionPort)
+        lines.forEach((l)=>{
+            console.log(l)
+            if (l.startsWith('S')){
+                handler.evalService(l)
+            }
+            else if (l.startsWith('R')){
+                handler.evalRelationship(l)
+            }
+            else if(l.startsWith('if')){
+                handler.evalService(l)
+            }
+            else{
+                console.log('app format invalid')
+                return false;
+            }
+
+        })    
+        console.log('finishing running app from')
+        return true;
+    }
+    catch(e){
+        console.log("aborting with exception")
+        console.log(e)
+    }
+}
+
+
+// evalService(serviceObj:Service,line:string){
     //     if (!serviceObj.input)
     //     {
     //         var objToSend = {
@@ -47,37 +110,6 @@ class callHandler{
     //     return data;
     // }
 
-    evalService(line:string){
-        var words=line.split(' ')
-        var objToSend = {
-            TweetType: 'Service',
-            ThingID: 'SeansPi',
-            SpaceID:'RetroScreens',
-            ServiceName: words[1],
-            ServiceInputs: '()'
-        }
-        // if (words.length>2)
-        // {
-        //     objToSend.ServiceInputs=words.join(",").replace(words[0],'')
-        // }
-        console.log(JSON.stringify(objToSend))
-        // var ws = new WebSocket('ws://'+this.ip+':'+this.portNumber)
-        // var data=''
-        // ws.onopen = function() {
-        //     ws.send(JSON.stringify(objToSend))
-        //   };
-        //ws.send(JSON.stringify(objToSend))
-
-        const Net = require('net')
-        const client = new Net.Socket();
-
-        client.connect({port:this.portNumber,host:this.ip}, function(){
-            //client.write("{\"Service Inputs\":\"()\",\"Tweet Type\":\"Service\",\"Thing ID\":\"SeansPi\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"DistanceSensor\"}");
-            
-        });
-        return true;
-    }
-}
 
     // evalRelationship(relationshipObj:Relationship,line:string){
 
@@ -95,25 +127,6 @@ class callHandler{
 
     //     }
     // }
-
-    // evalRelationship(relationshipObj:Relationship,line:string){
-
-    //     var serviceA=appStore.getters.getServicebyName(relationshipObj.getFirstService())
-    //     var serviceB=appStore.getters.getServicebyName(relationshipObj.getSecondService())
-
-    //     if (relationshipObj.type in ['drive']){
-    //         var outputFromA=this.evalService(serviceA,line)
-    //         this.evalService(serviceB,outputFromA)
-    //     }
-    //     else if (relationshipObj.type in ['contest']){
-
-    //     }
-    //     else if (relationshipObj.type in[]){
-
-    //     }
-    // }
-
-
 
 // export function executeApp(inputFilePath:string) {
 //     try{
@@ -144,37 +157,6 @@ class callHandler{
 //         console.log("aborting with exception")
 //     }
 // }
-
-export default function executeTheApp(lines:string[]) {
-    try{
-        console.log("app started")
-        //var reader = rd.createInterface(fs.createReadStream(inputFilePath));
-        var handler = new callHandler(connectionIP,connectionPort)
-        lines.forEach((l)=>{
-            console.log(l)
-            if (l.startsWith('S')){
-                handler.evalService(l)
-            }
-            // else if (l.startsWith('R')){
-            //     handler.evalRelationship(l)
-            // }
-            // else if(l.startsWith('if')){
-            // }
-            else{
-                console.log('app format invalid')
-                return false;
-            }
-
-        })    
-        console.log('finishing running app from')
-        return true;
-    }
-    catch(e){
-        console.log("aborting with exception")
-        console.log(e)
-    }
-}
-
 // var reader = rd.createInterface(fs.createReadStream(inputFile));
 // reader.on("line",(l:string) => {
 //             var tokens = l.split(" ");

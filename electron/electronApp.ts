@@ -47,7 +47,7 @@ ipcMain.on('delete-app', (event, appName) => {
 });
 
 ipcMain.on('run-service', (event, evalInfo: any) => {
-  event.returnValue = evalService(event, evalInfo);
+  evalService(event, evalInfo);
 });
 
 ipcMain.on('load-relationships', (event) => {

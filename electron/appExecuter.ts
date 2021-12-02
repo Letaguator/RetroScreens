@@ -36,14 +36,13 @@ class CallHandler{
         var client = new Net.Socket();
         client.connect({port:this.portNumber,host:this.ip}, function(){
             client.write("{\"Service Inputs\":\"()\",\"Tweet Type\":\"Service\",\"Thing ID\":\"SeansPi\",\"Space ID\":\"RetroScreens\",\"Service Name\":\"DistanceSensor\"}");
-            //this.client.write(JSON.stringify(objToSend))
+            //client.write(JSON.stringify(objToSend))
         });
         return true;
     }
 
     evalRelationship(ine:string){
         //get service names here
-
         //this.evalService(l1)
         //this.evalService(l2)
     }

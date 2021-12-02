@@ -20,7 +20,13 @@ import Service from "./classes/service";
 import Relationship from "./classes/relationship";
 import App from "./classes/app";
 
+//import executeTheApp from "../electron/appExecuter";
+
 const { ipcRenderer } = window.require("electron");
+
+console.log('Starting app')
+//executeTheApp(['S DistanceSensor'])
+console.log('Closing app')
 
 export default defineComponent({
   components: {

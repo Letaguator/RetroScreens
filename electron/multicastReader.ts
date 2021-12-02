@@ -62,6 +62,10 @@ export default async function retrieveIoTData(evt: IpcMainEvent)
         '{ "Tweet Type" : "Identity_Language","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "65.116.108.97","Port" : "6668" }',
         '{ "Tweet Type" : "Identity_Entity","Thing ID" : "HarshsPi","Space ID" : "RetroScreens","Name" : "","ID" : "HarshPiBoard","Type" : "Connected","Owner" : "Harsh","Vendor" : "","Description" : "" }',
         '{ "Tweet Type" : "Service","Name" : "Timer","Thing ID" : "HarshsPi","Entity ID" : "HarshPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "Timer:[NULL]:(elapsed,int, NULL)","Type" : "Action","AppCategory" : "Personal Assistance","Description" : "","Keywords" : "" }'
+        '{ "Tweet Type" : "Identity_Thing","Thing ID" : "MichelesPi","Space ID" : "RetroScreens","Name" : "","Model" : "","Vendor" : "","Owner" : "Michele","Description" : "","OS" : "Raspbian" }',
+        '{ "Tweet Type" : "Identity_Language","Thing ID" : "MichelesPi","Space ID" : "RetroScreens","Network Name" : "Continuum Guest","Communication Language" : "Sockets","IP" : "65.116.108.97","Port" : "6668" }',
+        '{ "Tweet Type" : "Identity_Entity","Thing ID" : "MichelesPi","Space ID" : "RetroScreens","Name" : "","ID" : "MichelesPiBoard","Type" : "Connected","Owner" : "Michele","Vendor" : "","Description" : "" }',
+        '{ "Tweet Type" : "Service","Name" : "AlarmClock","Thing ID" : "MichelesPi","Entity ID" : "MichelesPiBoard","Space ID" : "RetroScreens","Vendor" : "","API" : "AlarmClock:["time",int, NULL]:(NULL)","Type" : "Action","AppCategory" : "Automation","Description" : "","Keywords" : "" }'
     ];
     for(let i = 0; i < tweets.length; i++)
     {

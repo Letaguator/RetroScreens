@@ -11,7 +11,7 @@
     "start": "tsc --project ./electron/tsconfig.json && npm run build && electron ."
   },
   "dependencies": {
-    "@syncfusion/ej2-vue-navigations": "^19.3.54",
+    "@syncfusion/ej2-vue-navigations": "^19.4.40",
     "core-js": "^3.6.5",
     "electron": "^16.0.3",
     "vue": "^3.2.23",

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@syncfusion/ej2-vue-navigations": "^19.3.54",
-    "core-js": "^3.6.5",
+    "core-js": "^3.22.5",
     "electron": "^16.0.3",
     "vue": "^3.2.23",
     "vue-class-component": "^8.0.0-0",

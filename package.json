@@ -20,7 +20,7 @@
     "vuedraggable": "^4.1.0",
     "vuex": "^4.0.0-0",
     "websocket-ts": "^1.1.1",
-    "ws": "^8.3.0"
+    "ws": "^8.7.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.10",
